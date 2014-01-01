@@ -1,0 +1,88 @@
+
+* { margin: 0; padding: 0; box-sizing: border-box; line-height: 1.6; }
+html { font-size: 16px; }
+
+input {
+	padding: 10px;
+}
+input:not([type="submit"]) {
+	width: 100%;
+}
+
+h3 {
+	padding: 10px;
+	padding-bottom: 0;
+}
+h3 .sub {
+	font-size: 90%;
+}
+.bookmarks,
+.bookmarks li {
+	display: block;
+	list-style: none;
+}
+.bookmarks {
+	padding: 10px;
+}
+.bookmarks li {
+	padding: 10px;
+	background-color: #eee;
+	word-break: break-word;
+}
+.bookmarks li + li {
+	margin-top: 10px;
+}
+.bookmarks .archive {
+	float: left;
+	margin-right: .5em;
+}
+.bookmarks .archive a,
+.bookmarks .edit a {
+	display: inline-block;
+	background-color: red;
+	color: white;
+	padding: 0 6px;
+	border-radius: 4px;
+	text-decoration: none;
+}
+.bookmarks .link a {
+	color: inherit;
+	font-weight: bold;
+	text-decoration: none;
+	font-size: 120%;
+}
+.bookmarks .favorite {
+	display: inline-block;
+	margin-left: .25em;
+}
+.bookmarks .favorite a {
+	font-size: 140%;
+	line-height: 1em;
+	text-decoration: none;
+	color: #aaa;
+}
+.bookmarks .is-favorite .favorite a {
+	color: #000;
+}
+.bookmarks .created {
+	float: right;
+}
+.bookmarks .host {
+	float: left;
+}
+.bookmarks .host a {
+	color: #888;
+}
+.bookmarks .edit {
+	float: left;
+	margin-left: .5em;
+}
+.bookmarks .edit a {
+	background-color: blue;
+}
+.bookmarks li::after {
+	content: '';
+	display: block;
+	clear: both;
+	height: 0;
+}

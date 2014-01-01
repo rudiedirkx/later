@@ -37,7 +37,7 @@ foreach ( $bookmarks as $bm ) {
 	echo '<li class="' . implode(' ', $classes) . '">';
 	echo '<div class="archive"><a class="ajax" href="?archive=' . $id . '">A</a></div>';
 	echo '<div class="link">';
-	echo '  <a href="' . $bm->url . '">' . $bm->title . '</a>';
+	echo '  <a href="' . html($bm->url) . '">' . html($bm->title) . '</a>';
 	echo '  <div class="favorite"><a href="?favorite=' . $id . '">♥</a></div>';
 	echo '</div>';
 	echo '<div class="created">' . date(DT, $bm->created) . '</div>';

@@ -41,7 +41,7 @@ foreach ( $bookmarks as $bm ) {
 	echo '  <div class="favorite"><a href="?favorite=' . $id . '">♥</a></div>';
 	echo '</div>';
 	echo '<div class="created">' . date(DT, $bm->created) . '</div>';
-	echo '<div class="host">' . $host . '</div>';
+	echo '<div class="host"><a href="/readre/read.php?url=' . urlencode($bm->url) . '">' . $host . '</a></div>';
 	// echo '<div class="edit"><a href="https://www.instapaper.com/edit/' . $id . '">E</a></div>';
 	echo '</li>';
 }

@@ -36,14 +36,17 @@ h3 .sub {
 	float: left;
 	margin-right: .5em;
 }
-.bookmarks .archive a,
-.bookmarks .edit a {
+.bookmarks .archive a {
 	display: inline-block;
 	background-color: red;
 	color: white;
 	padding: 0 6px;
 	border-radius: 4px;
 	text-decoration: none;
+}
+.bookmarks .archive a:hover,
+.bookmarks .archive a:focus {
+	background-color: black;
 }
 .bookmarks .link a {
 	color: inherit;

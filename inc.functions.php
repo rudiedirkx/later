@@ -18,12 +18,28 @@ function get_css() {
 	return $css;
 }
 
-function do_save( $url, $title ) {
+function do_save( $url, $title, $id = null ) {
 	global $db, $user;
 
-	$save = array('o' => time(), 'title' => $title);
+	if ( !$title ) {
+		$html = @file_get_contents($url);
+		if ( $html && @preg_match('#<title>(.+?)</\w+>#', $html, $match) ) {
+			$title = $match[1];
+		}
+	}
 
-	// Exists, so update order
+	$title = preg_replace('#\s+#', ' ', trim($title));
+
+	$save = array('title' => $title, 'url' => $url);
+
+	// Given id, only update, no extra logic, like order or archive
+	if ( $id ) {
+		return $db->update('urls', $save, array('id' => $id));
+	}
+
+	$save += array('o' => time());
+
+	// Exists, so reorder and unarchive
 	if ( $id = $db->select_one('urls', 'id', array('url' => $url, 'user_id' => $user->id)) ) {
 		return $db->update('urls', $save + array('archive' => 0), array('id' => $id));
 	}
@@ -48,7 +64,8 @@ function is_logged_in( $act = true ) {
 		return true;
 	}
 
-	if ( isset($_SESSION[SESSION_NAME]['uid']) ) {
+	$cookie = isset($_SESSION[SESSION_NAME]['uid']);
+	if ( $cookie ) {
 		$id = $_SESSION[SESSION_NAME]['uid'];
 		$user = $db->select('users', compact('id'))->first();
 		if ( $user ) {
@@ -59,7 +76,9 @@ function is_logged_in( $act = true ) {
 	if ( $act ) {
 		do_logout();
 
-		// do_redirect('login', array('error' => 'From: ' . __FUNCTION__ . '()'));
-		exit('You no logged in?! <a href="logout.php">Log out</a>');
+		if ( !$cookie ) {
+			do_redirect('login');
+		}
+		exit('You no logged in no more. <a href="logout.php">Log out for sure.</a>');
 	}
 }

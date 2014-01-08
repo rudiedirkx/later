@@ -11,7 +11,7 @@ if ( isset($_POST['user'], $_POST['pass']) ) {
 		->first();
 
 	if ( $user ) {
-		session_start();
+		@session_start();
 
 		$_SESSION[SESSION_NAME]['uid'] = $user->id;
 
@@ -25,6 +25,8 @@ if ( isset($_POST['user'], $_POST['pass']) ) {
 
 $error = @$_GET['error'];
 
+require 'tpl.header.php';
+
 ?>
 
 <? if ($error): ?>
@@ -32,7 +34,7 @@ $error = @$_GET['error'];
 <? endif ?>
 
 <form method="post" action>
-	<p>E-mail: <input type="email" name="user" value="<?= @$_COOKIE['lt_user'] ?>" required /></p>
-	<p>Password: <input type="password" name="pass" required /></p>
+	<p class="form-item">E-mail: <input type="email" name="user" value="<?= @$_COOKIE['lt_user'] ?>" required autofocus /></p>
+	<p class="form-item">Password: <input type="password" name="pass" required /></p>
 	<p><input type="submit" value="Log in" /></p>
 </form>

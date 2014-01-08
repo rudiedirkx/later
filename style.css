@@ -1,6 +1,18 @@
 
 * { margin: 0; padding: 0; box-sizing: border-box; line-height: 1.6; }
 html { font-size: 16px; }
+body { padding: 15px; }
+
+p {
+	margin: 15px 0;
+}
+p:first-child {
+	margin-top: 0;
+}
+
+.error {
+	color: red;
+}
 
 input {
 	padding: 10px;
@@ -9,9 +21,12 @@ input:not([type="submit"]) {
 	width: 100%;
 }
 
+.form-item {
+	margin-bottom: 1em;
+}
+
 h3 {
-	padding: 10px;
-	padding-bottom: 0;
+	margin-bottom: 15px;
 }
 h3 .sub {
 	font-size: 90%;
@@ -22,7 +37,7 @@ h3 .sub {
 	list-style: none;
 }
 .bookmarks {
-	padding: 10px;
+	margin-bottom: 15px;
 }
 .bookmarks li {
 	padding: 10px;
@@ -36,7 +51,8 @@ h3 .sub {
 	float: left;
 	margin-right: .5em;
 }
-.bookmarks .archive a {
+.bookmarks .archive a,
+.bookmarks .edit a {
 	display: inline-block;
 	background-color: red;
 	color: white;
@@ -45,7 +61,9 @@ h3 .sub {
 	text-decoration: none;
 }
 .bookmarks .archive a:hover,
-.bookmarks .archive a:focus {
+.bookmarks .archive a:focus,
+.bookmarks .edit a:hover,
+.bookmarks .edit a:focus {
 	background-color: black;
 }
 .bookmarks .link a {

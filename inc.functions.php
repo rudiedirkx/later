@@ -50,7 +50,8 @@ function do_save( $url, $title, $id = null ) {
 
 function get_url( $path, $query = array() ) {
 	$query = $query ? '?' . http_build_query($query) : '';
-	return $path . '.php' . $query;
+	$path = $path ? $path . '.php' : basename($_SERVER['SCRIPT_NAME']);
+	return $path . $query;
 }
 
 function do_redirect( $path, $query = array() ) {

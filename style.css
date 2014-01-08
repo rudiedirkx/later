@@ -47,11 +47,13 @@ h3 .sub {
 .bookmarks li + li {
 	margin-top: 10px;
 }
-.bookmarks .archive {
+.bookmarks .archive,
+.bookmarks .unarchive {
 	float: left;
 	margin-right: .5em;
 }
 .bookmarks .archive a,
+.bookmarks .unarchive a,
 .bookmarks .edit a {
 	display: inline-block;
 	background-color: red;
@@ -60,8 +62,13 @@ h3 .sub {
 	border-radius: 4px;
 	text-decoration: none;
 }
+.bookmarks .unarchive a {
+	background-color: green;
+}
 .bookmarks .archive a:hover,
 .bookmarks .archive a:focus,
+.bookmarks .unarchive a:hover,
+.bookmarks .unarchive a:focus,
 .bookmarks .edit a:hover,
 .bookmarks .edit a:focus {
 	background-color: black;

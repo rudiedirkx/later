@@ -5,7 +5,7 @@ require 'inc.bootstrap.php';
 is_logged_in(true);
 
 if ( isset($_GET['archive']) ) {
-	$db->update('urls', array('archive' => 1), array('user_id' => $user->id, 'id' => $_GET['archive']));
+	$db->update('urls', array('archive' => 1, 'o' => time()), array('user_id' => $user->id, 'id' => $_GET['archive']));
 	exit('OK');
 }
 

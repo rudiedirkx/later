@@ -1,13 +1,24 @@
 <?php
 
+$_list = @$groups ?: $bookmarks;
+
 echo '<ol class="bookmarks">';
-foreach ( $bookmarks as $bm ) {
+foreach ( $_list as $g => $bm ) {
+	if ( is_array($bm) ) {
+		$groups = $bm;
+		echo '<li class="multiple">';
+		echo '<div class="group-header">' . $g . '</div>';
+		require 'tpl.bookmarks.php';
+		echo '</li>';
+		continue;
+	}
+
 	$id = $bm->id;
 
 	$_url = parse_url($bm->url);
 	$host = substr($_url['host'], 0, 4) == 'www.' ? substr($_url['host'], 4) : $_url['host'];
 
-	$classes = array();
+	$classes = array('single');
 	$bm->favorite && $classes[] = 'is-favorite';
 
 	$archiveAction = $bm->archive ? 'unarchive' : 'archive';
@@ -19,6 +30,9 @@ foreach ( $bookmarks as $bm ) {
 	echo '  <div class="favorite"><a class="ajax" href="' . get_url('index', array('favorite' => $id, 'value' => (int)!$bm->favorite)) . '">♥</a></div>';
 	echo '</div>';
 	echo '<div class="created">' . date(DT, $bm->created) . '</div>';
+	// if ( $bm->group ) {
+		// echo '<div class="group">[' . $bm->group . ']</div>';
+	// }
 	echo '<div class="host"><a href="/readre/read.php?url=' . urlencode($bm->url) . '">' . $host . '</a></div>';
 	echo '<div class="edit"><a href="' . get_url('form', array('id' => $id)) . '">E</a></div>';
 	echo '</li>';

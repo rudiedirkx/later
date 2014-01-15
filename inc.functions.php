@@ -1,5 +1,18 @@
 <?php
 
+function do_groups($bookmarks) {
+	$groups = array();
+	foreach ( $bookmarks as $bm ) {
+		if ( $bm->group ) {
+			$groups[$bm->group][] = $bm;
+		}
+		else {
+			$groups[$bm->id] = $bm;
+		}
+	}
+	return $groups;
+}
+
 function do_logout() {
 	if ( isset($_SESSION[SESSION_NAME]) ) {
 		unset($_SESSION[SESSION_NAME]);
@@ -18,7 +31,7 @@ function get_css() {
 	return $css;
 }
 
-function do_save( $url, $title, $id = null ) {
+function do_save( $url, $title, $id = null, $group = '' ) {
 	global $db, $user, $fgcContext;
 
 	if ( !$title ) {
@@ -31,10 +44,18 @@ function do_save( $url, $title, $id = null ) {
 	$title = preg_replace('#\s+#', ' ', trim($title));
 
 	$save = array('title' => $title, 'url' => $url);
+	$group and $save['group'] = $group;
 
 	// Given id, only update, no extra logic, like order or archive
 	if ( $id ) {
-		return $db->update('urls', $save, array('id' => $id));
+		try {
+			return $db->update('urls', $save, array('id' => $id));
+		}
+		catch (db_exception $ex) {
+			echo $ex->query . "\n\n";
+			echo $ex->getMessage() . "\n";
+			exit;
+		}
 	}
 
 	$save += array('o' => time());

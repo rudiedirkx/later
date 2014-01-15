@@ -39,13 +39,32 @@ h3 .sub {
 .bookmarks {
 	margin-bottom: 15px;
 }
+.multiple .bookmarks {
+	margin-bottom: 0;
+}
+.group-header {
+	padding: 10px 10px;
+	font-weight: bold;
+	font-size: 120%;
+	border-bottom: solid 1px #ddd;
+	line-height: 1;
+	text-transform: uppercase;
+	letter-spacing: 1px;
+}
 .bookmarks li {
 	padding: 10px;
 	background-color: #eee;
 	word-break: break-word;
 }
+.bookmarks li.multiple {
+	padding: 5px;
+}
 .bookmarks li + li {
 	margin-top: 10px;
+}
+.multiple .bookmarks li + li {
+	margin-top: 0;
+	border-top: solid 1px #ddd;
 }
 .bookmarks .archive,
 .bookmarks .unarchive {
@@ -95,8 +114,13 @@ h3 .sub {
 .bookmarks .created {
 	float: right;
 }
+.bookmarks .group,
 .bookmarks .host {
 	float: left;
+}
+.bookmarks .group {
+	margin-right: .5em;
+	font-weight: bold;
 }
 .bookmarks .host a {
 	color: #888;

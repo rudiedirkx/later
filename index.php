@@ -22,6 +22,7 @@ else if ( isset($_GET['favorite'], $_GET['value']) ) {
 $limit = 20;
 $bookmarks = $db->select('urls', 'user_id = ? AND archive = ? ORDER BY o DESC LIMIT ' . $limit, array($user->id, 0));
 $bookmarks = $bookmarks->all();
+$groups = do_groups($bookmarks);
 
 $total = $db->count('urls', 'user_id = ? AND archive = ?', array($user->id, 0));
 

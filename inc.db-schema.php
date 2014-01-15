@@ -15,5 +15,6 @@ return array(
 		'o' => array('unsigned' => true),
 		'favorite' => array('unsigned' => true, 'default' => 0),
 		'archive' => array('unsigned' => true, 'default' => 0),
+		'group',
 	),
 );

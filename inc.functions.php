@@ -19,11 +19,11 @@ function get_css() {
 }
 
 function do_save( $url, $title, $id = null ) {
-	global $db, $user;
+	global $db, $user, $fgcContext;
 
 	if ( !$title ) {
-		$html = @file_get_contents($url);
-		if ( $html && @preg_match('#<title>(.+?)</\w+>#', $html, $match) ) {
+		$html = @file_get_contents($url, false, $fgcContext);
+		if ( $html && @preg_match('#<title>([^<]+)#', $html, $match) ) {
 			$title = $match[1];
 		}
 	}

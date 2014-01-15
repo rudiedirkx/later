@@ -20,3 +20,9 @@ require 'inc.ensure-db-schema.php';
 
 define('SESSION_NAME', 'later');
 define('DT', 'd M H:i');
+
+$fgcContext = stream_context_create(array(
+	'http' => array(
+		'user_agent' => 'Later 1.0',
+	),
+));

@@ -86,6 +86,7 @@ function is_logged_in( $act = true ) {
 		return true;
 	}
 
+	// From session
 	$cookie = isset($_SESSION[SESSION_NAME]['uid']);
 	if ( $cookie ) {
 		$id = $_SESSION[SESSION_NAME]['uid'];
@@ -95,6 +96,18 @@ function is_logged_in( $act = true ) {
 		}
 	}
 
+	// From HTTP auth
+	if ( isset($_SERVER['PHP_AUTH_USER'], $_SERVER['PHP_AUTH_PW']) ) {
+		$args = array($_SERVER['PHP_AUTH_USER'], ':', $_SERVER['PHP_AUTH_PW']);
+		$user = $db
+			->select('users', 'email = ? AND password = SHA1(CONCAT(id, ?, ?))', $args)
+			->first();
+		if ( $user ) {
+			return true;
+		}
+	}
+
+	// FAILED
 	if ( $act ) {
 		do_logout();
 

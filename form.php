@@ -19,7 +19,7 @@ if ( isset($_POST['url'], $_POST['title'], $_POST['group']) ) {
 	do_save($url, $title, $id, $group);
 
 	do_redirect('index');
-	exit;
+	exit('Bookmark saved');
 }
 
 require 'tpl.header.php';

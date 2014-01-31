@@ -31,7 +31,7 @@ $groups = do_groups($bookmarks);
 
 $total = $db->count('urls', 'user_id = ? AND archive = ?', array($user->id, 0));
 
-$groupOptions = $db->select_fields('urls', '"group", "group"', '"group" <> ? GROUP BY "group"', array(''));
+$groupOptions = $db->select_fields('urls', '"group", "group"', 'archive = ? AND "group" <> ? GROUP BY "group"', array(0, ''));
 
 require 'tpl.header.php';
 

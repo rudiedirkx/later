@@ -1,6 +1,6 @@
 
 * { margin: 0; padding: 0; box-sizing: border-box; line-height: 1.6; }
-html { font-size: 16px; }
+html { font-size: 16px; font-family: sans-serif; }
 body { padding: 8px; }
 
 p {
@@ -118,7 +118,6 @@ h3 .sub {
 .bookmarks .created {
 	float: right;
 }
-.bookmarks .group,
 .bookmarks .host {
 	float: left;
 }
@@ -129,9 +128,15 @@ h3 .sub {
 .bookmarks .host a {
 	color: #888;
 }
+.bookmarks .change-group,
 .bookmarks .edit {
 	float: left;
 	margin-left: .5em;
+}
+.bookmarks .change-group select {
+	width: 3em;
+	word-break: normal;
+	text-transform: uppercase;
 }
 .bookmarks .edit a {
 	background-color: blue;

@@ -8,7 +8,9 @@ foreach ( $_list as $g => $bm ) {
 		$groups = $bm;
 		echo '<li class="multiple">';
 		echo '<div class="group-header">' . $g . '</div>';
+		$inner = true;
 		require 'tpl.bookmarks.php';
+		$inner = false;
 		echo '</li>';
 		continue;
 	}
@@ -23,7 +25,7 @@ foreach ( $_list as $g => $bm ) {
 
 	$archiveAction = $bm->archive ? 'unarchive' : 'archive';
 
-	echo '<li class="' . implode(' ', $classes) . '">';
+	echo '<li data-id="' . $bm->id . '" class="' . implode(' ', $classes) . '">';
 	echo '<div class="' . $archiveAction . '"><a class="ajax" href="' . get_url('index', array($archiveAction => $id)) . '">A</a></div>';
 	echo '<div class="link">';
 	echo '  <a href="' . html($bm->url) . '">' . html($bm->title ?: $bm->url) . '</a>';
@@ -34,26 +36,49 @@ foreach ( $_list as $g => $bm ) {
 		// echo '<div class="group">[' . $bm->group . ']</div>';
 	// }
 	echo '<div class="host"><a href="/readre/read.php?url=' . urlencode($bm->url) . '">' . $host . '</a></div>';
+	if ( @$groupOptions ) {
+		echo '<div class="change-group"><select><option value>-</option>' . html_options($groupOptions, $bm->group) . '</select></div>';
+	}
 	echo '<div class="edit"><a href="' . get_url('form', array('id' => $id)) . '">E</a></div>';
 	echo '</li>';
 }
 echo '</ol>';
 
+// No footer for sub-inclusions
+if ( @$inner ) {
+	return;
+}
+
 ?>
 <script>
+function ajax(href, done) {
+	var xhr = new XMLHttpRequest;
+	xhr.onload = function(e) {
+		if ( this.status == 200 && this.responseText == 'OK' ) {
+			return (done || function() {
+				location.reload();
+			})();
+		}
+
+		alert('Error: ' + this.responseText);
+	};
+	xhr.open('get', href, true);
+	xhr.send();
+}
 [].forEach.call(document.querySelectorAll('.ajax'), function(el) {
 	el.addEventListener('click', function(e) {
 		e.preventDefault();
-		var xhr = new XMLHttpRequest;
-		xhr.onload = function(e) {
-			if ( this.status == 200 && this.responseText == 'OK' ) {
-				return location.reload();
-			}
+		ajax(el.href);
+	});
+});
 
-			alert('Error: ' + this.responseText);
-		};
-		xhr.open('get', el.href, true);
-		xhr.send();
+[].forEach.call(document.querySelectorAll('.change-group select'), function(el) {
+	el.addEventListener('change', function(e) {
+		var group = this.value || '',
+			id = this.parentNode.parentNode.getAttribute('data-id'),
+			base = '<?= get_url('index', array('group' => 'GROUP', 'id' => 'ID')) ?>',
+			href = base.replace('GROUP', encodeURIComponent(group)).replace('ID', id);
+		ajax(href);
 	});
 });
 </script>

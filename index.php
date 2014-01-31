@@ -19,12 +19,19 @@ else if ( isset($_GET['favorite'], $_GET['value']) ) {
 	exit('OK');
 }
 
+else if ( isset($_GET['group'], $_GET['id']) ) {
+	$db->update('urls', array('group' => $_GET['group'] ?: ''), array('user_id' => $user->id, 'id' => $_GET['id'], 'archive' => 0));
+	exit('OK');
+}
+
 $limit = 20;
 $bookmarks = $db->select('urls', 'user_id = ? AND archive = ? ORDER BY o DESC LIMIT ' . $limit, array($user->id, 0));
 $bookmarks = $bookmarks->all();
 $groups = do_groups($bookmarks);
 
 $total = $db->count('urls', 'user_id = ? AND archive = ?', array($user->id, 0));
+
+$groupOptions = $db->select_fields('urls', '"group", "group"', '"group" <> ? GROUP BY "group"', array(''));
 
 require 'tpl.header.php';
 

@@ -1,5 +1,15 @@
 <?php
 
+function html_options( $options, $selected = null, $empty = '' ) {
+	$html = '';
+	$empty && $html .= '<option>' . $empty;
+	foreach ( $options AS $value => $label ) {
+		$isSelected = $value == $selected ? ' selected' : '';
+		$html .= '<option value="' . html($value) . '"' . $isSelected . '>' . html($label) . '</option>';
+	}
+	return $html;
+}
+
 function do_groups($bookmarks) {
 	$groups = array();
 	foreach ( $bookmarks as $bm ) {

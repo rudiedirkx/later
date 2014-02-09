@@ -24,8 +24,10 @@ else if ( isset($_GET['group'], $_GET['id']) ) {
 	exit('OK');
 }
 
-$limit = 20;
-$bookmarks = $db->select('urls', 'user_id = ? AND archive = ? ORDER BY o DESC LIMIT ' . $limit, array($user->id, 0));
+$limit = 5;
+$page = (int)@$_GET['page'];
+$offset = $page * $limit;
+$bookmarks = $db->select('urls', 'user_id = ? AND archive = ? ORDER BY o DESC LIMIT ' . $limit . ' OFFSET ' . $offset, array($user->id, 0));
 $bookmarks = $bookmarks->all();
 $groups = do_groups($bookmarks);
 

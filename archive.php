@@ -5,7 +5,9 @@ require 'inc.bootstrap.php';
 is_logged_in(true);
 
 $limit = 100;
-$bookmarks = $db->select('urls', 'user_id = ? AND archive = ? ORDER BY o DESC LIMIT ' . $limit, array($user->id, 1));
+$page = (int)@$_GET['page'];
+$offset = $page * $limit;
+$bookmarks = $db->select('urls', 'user_id = ? AND archive = ? ORDER BY o DESC LIMIT ' . $limit . ' OFFSET ' . $offset, array($user->id, 1));
 $bookmarks = $bookmarks->all();
 
 $total = $db->count('urls', 'user_id = ? AND archive = ?', array($user->id, 1));

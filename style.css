@@ -147,3 +147,31 @@ h3 .sub {
 	clear: both;
 	height: 0;
 }
+
+.pager,
+.pager li {
+	list-style: none;
+	padding: 0;
+}
+.pager {
+	display: block;
+}
+.pager.has-1-pages {
+	display: none;
+}
+.pager li {
+	display: inline-block;
+}
+.pager a {
+	display: block;
+	padding: 0 11px;
+	background-color: #ddd;
+	font-weight: bold;
+	text-decoration: none;
+	color: #000;
+	border: solid 1px #999;
+}
+.pager .current a {
+	background-color: #999;
+	color: #fff;
+}

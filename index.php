@@ -24,7 +24,7 @@ else if ( isset($_GET['group'], $_GET['id']) ) {
 	exit('OK');
 }
 
-$limit = 5;
+$limit = 25;
 $page = (int)@$_GET['page'];
 $offset = $page * $limit;
 $bookmarks = $db->select('urls', 'user_id = ? AND archive = ? ORDER BY o DESC LIMIT ' . $limit . ' OFFSET ' . $offset, array($user->id, 0));

@@ -2,6 +2,11 @@
 
 require 'inc.bootstrap.php';
 
+if ( is_logged_in(false) ) {
+	do_redirect('index');
+	exit("You're already logged in....");
+}
+
 if ( isset($_POST['user'], $_POST['pass']) ) {
 	setcookie('lt_user', $_POST['user']);
 

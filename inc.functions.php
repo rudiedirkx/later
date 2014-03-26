@@ -46,7 +46,7 @@ function do_save( $url, $title, $id = null, $group = '' ) {
 
 	if ( !$title ) {
 		$html = @file_get_contents($url, false, $fgcContext);
-		if ( $html && @preg_match('#<title>([^<]+)#', $html, $match) ) {
+		if ( $html && @preg_match('#<title>([^<]+)#i', $html, $match) ) {
 			$title = $match[1];
 			$title = html_entity_decode($title);
 			$title = preg_replace_callback('/&#(\d+);/', function($match) {

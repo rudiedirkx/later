@@ -24,20 +24,27 @@ else if ( isset($_GET['group'], $_GET['id']) ) {
 	exit('OK');
 }
 
+$urlFilter = @$_GET['url_filter'] && trim($_GET['url_filter']) != '' ? $db->replaceholders(' AND url LIKE ?', array('%' . trim($_GET['url_filter']) . '%')) : '';
+
 $limit = 25;
 $page = (int)@$_GET['page'];
 $offset = $page * $limit;
-$bookmarks = $db->select('urls', 'user_id = ? AND archive = ? ORDER BY o DESC LIMIT ' . $limit . ' OFFSET ' . $offset, array($user->id, 0));
+$bookmarks = $db->select('urls', 'user_id = ? AND archive = ?' . $urlFilter . ' ORDER BY o DESC LIMIT ' . $limit . ' OFFSET ' . $offset, array($user->id, 0));
 $bookmarks = $bookmarks->all();
 $groups = do_groups($bookmarks);
 
-$total = $db->count('urls', 'user_id = ? AND archive = ?', array($user->id, 0));
+$total = $db->count('urls', 'user_id = ? AND archive = ?' . $urlFilter, array($user->id, 0));
 
 $groupOptions = $db->select_fields('urls', '"group", "group"', 'archive = ? AND "group" <> ? GROUP BY "group"', array(0, ''));
 
 require 'tpl.header.php';
 
-echo '<h3>' . count($bookmarks) . ' / ' . $limit . ' / ' . $total . ' unread <a href="form.php">+</a> / <a href="archive.php">...</a></h3>';
+echo '<h3>';
+echo count($bookmarks) . ' / ';
+echo $total . ' unread <a href="form.php">+</a> / ';
+echo '<a href="archive.php">...</a> / ';
+echo '<form class="inline-filter"><input name="url_filter" placeholder="Filter URL..." class="search" /> <input type="submit" class="submit" /></form>';
+echo '</h3>';
 
 require 'tpl.bookmarks.php';
 

@@ -52,13 +52,15 @@ if ( @$inner ) {
 $pages = ceil($total / $limit);
 
 ?>
-<ul class="pager has-<?= $pages ?>-pages">
-	<? foreach (range(0, $pages-1) as $p): ?>
-		<li class="<?= $p == $page ? 'current' : '' ?>">
-			<a href="?page=<?= $p ?>"><?= $p+1 ?></a>
-		</li>
-	<? endforeach ?>
-</ul>
+<?if ($pages > 1): ?>
+	<ul class="pager has-<?= $pages ?>-pages">
+		<? foreach (range(0, $pages-1) as $p): ?>
+			<li class="<?= $p == $page ? 'current' : '' ?>">
+				<a href="?page=<?= $p ?>"><?= $p+1 ?></a>
+			</li>
+		<? endforeach ?>
+	</ul>
+<? endif ?>
 
 <script>
 function rAjax(href, done) {

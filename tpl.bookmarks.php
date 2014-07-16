@@ -61,7 +61,7 @@ $pages = ceil($total / $limit);
 </ul>
 
 <script>
-function ajax(href, done) {
+function rAjax(href, done) {
 	var xhr = new XMLHttpRequest;
 	xhr.onload = function(e) {
 		if ( this.status == 200 && this.responseText == 'OK' ) {
@@ -78,7 +78,7 @@ function ajax(href, done) {
 [].forEach.call(document.querySelectorAll('.ajax'), function(el) {
 	el.addEventListener('click', function(e) {
 		e.preventDefault();
-		ajax(el.href);
+		rAjax(el.href);
 	});
 });
 
@@ -88,7 +88,7 @@ function ajax(href, done) {
 			id = this.parentNode.parentNode.getAttribute('data-id'),
 			base = '<?= get_url('index', array('group' => 'GROUP', 'id' => 'ID')) ?>',
 			href = base.replace('GROUP', encodeURIComponent(group)).replace('ID', id);
-		ajax(href);
+		rAjax(href);
 	});
 });
 </script>

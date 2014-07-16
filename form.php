@@ -26,8 +26,8 @@ require 'tpl.header.php';
 
 ?>
 <form method="post" action>
-	<p class="form-item">Title: <input name="title" placeholder="Optional title..." value="<?= @$bm->title ?>" /></p>
-	<p class="form-item">URL: <input type="url" name="url" placeholder="Mandatory URL..." required value="<?= @$bm->url ?>" /></p>
-	<p class="form-item">Group: <input name="group" placeholder="Optional group..." value="<?= @$bm->group ?>" /></p>
+	<p class="form-item">URL: <input autofocus type="url" name="url" placeholder="Mandatory URL..." required value="<?= html(@$bm->url) ?>" /></p>
+	<p class="form-item">Title: <input name="title" placeholder="Optional title..." value="<?= html(@$bm->title) ?>" /></p>
+	<p class="form-item">Group: <input name="group" placeholder="Optional group..." value="<?= html(@$bm->group) ?>" /></p>
 	<p><input type="submit" value="Save" /></p>
 </form>

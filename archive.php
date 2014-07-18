@@ -13,12 +13,15 @@ $bookmarks = $db->select('urls', 'user_id = ? AND archive = ?' . $urlFilter . ' 
 $bookmarks = $bookmarks->all();
 
 $total = $db->count('urls', 'user_id = ? AND archive = ?' . $urlFilter, array($user->id, 1));
+$realTotal = $urlFilter ? $db->count('urls', 'user_id = ? AND archive = ?', array($user->id, 1)) : 0;
 
 require 'tpl.header.php';
 
 echo '<h3>';
 echo count($bookmarks) . ' / ';
-echo $total . ' archived <a href="form.php">+</a> / ';
+echo $total;
+echo $realTotal ? ' (' . $realTotal . ')' : '';
+echo ' archived <a href="form.php">+</a> / ';
 echo '<a href="index.php">...</a> / ';
 echo '<form class="inline-filter"><input name="url_filter" placeholder="Filter URL..." class="search" /> <input type="submit" class="submit" /></form>';
 echo '</h3>';

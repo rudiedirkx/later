@@ -34,6 +34,7 @@ $bookmarks = $bookmarks->all();
 $groups = do_groups($bookmarks);
 
 $total = $db->count('urls', 'user_id = ? AND archive = ?' . $urlFilter, array($user->id, 0));
+$realTotal = $urlFilter ? $db->count('urls', 'user_id = ? AND archive = ?', array($user->id, 0)) : 0;
 
 $groupOptions = $db->select_fields('urls', '"group", "group"', 'archive = ? AND "group" <> ? GROUP BY "group"', array(0, ''));
 
@@ -41,7 +42,9 @@ require 'tpl.header.php';
 
 echo '<h3>';
 echo count($bookmarks) . ' / ';
-echo $total . ' unread <a href="form.php">+</a> / ';
+echo $total;
+echo $realTotal ? ' (' . $realTotal . ')' : '';
+echo ' unread <a href="form.php">+</a> / ';
 echo '<a href="archive.php">...</a> / ';
 echo '<form class="inline-filter"><input name="url_filter" placeholder="Filter URL..." class="search" /> <input type="submit" class="submit" /></form>';
 echo '</h3>';

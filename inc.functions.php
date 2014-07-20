@@ -48,6 +48,9 @@ function do_save( $url, $title, $id = null, $group = '' ) {
 		$html = @file_get_contents($url, false, $fgcContext);
 		if ( $html && @preg_match('#<title>([^<]+)#i', $html, $match) ) {
 			$title = $match[1];
+			$title = strtr($title, array(
+				'&trade;' => '™',
+			));
 			$title = html_entity_decode($title);
 			$title = preg_replace_callback('/&#(\d+);/', function($match) {
 				return chr((int)$match[1]);

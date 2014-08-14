@@ -90,7 +90,8 @@ h3 .sub {
 }
 .bookmarks .archive a,
 .bookmarks .unarchive a,
-.bookmarks .edit a {
+.bookmarks .edit a,
+.bookmarks .actualize a {
 	display: inline-block;
 	background-color: red;
 	color: white;
@@ -107,7 +108,9 @@ h3 .sub {
 .bookmarks .unarchive a:hover,
 .bookmarks .unarchive a:focus,
 .bookmarks .edit a:hover,
-.bookmarks .edit a:focus {
+.bookmarks .edit a:focus,
+.bookmarks .actualize a:hover,
+.bookmarks .actualize a:focus {
 	background-color: black;
 }
 .bookmarks .link a {
@@ -143,7 +146,8 @@ h3 .sub {
 	color: #888;
 }
 .bookmarks .change-group,
-.bookmarks .edit {
+.bookmarks .edit,
+.bookmarks .actualize {
 	float: left;
 	margin-left: .5em;
 }
@@ -155,12 +159,12 @@ h3 .sub {
 .bookmarks .edit a {
 	background-color: blue;
 }
-.bookmarks li::after {
-	content: '';
-	display: block;
-	clear: both;
-	height: 0;
+.bookmarks .actualize a {
+	background-color: green;
+	padding: 0 3px;
 }
+
+
 
 .pager,
 .pager li {
@@ -185,4 +189,13 @@ h3 .sub {
 .pager .current a {
 	background-color: #999;
 	color: #fff;
+}
+
+
+
+.bookmarks li::after {
+	content: '';
+	display: block;
+	clear: both;
+	height: 0;
 }

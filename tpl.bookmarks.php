@@ -40,6 +40,9 @@ foreach ( $_list as $g => $bm ) {
 		echo '<div class="change-group"><select><option value>-</option>' . html_options($groupOptions, $bm->group) . '</select></div>';
 	}
 	echo '<div class="edit"><a href="' . get_url('form', array('id' => $id)) . '">E</a></div>';
+	if ( !$bm->archive ) {
+		echo '<div class="actualize"><a class="ajax" href="' . get_url('index', array('actualize' => $id)) . '">▲</a></div>';
+	}
 	echo '</li>';
 }
 echo '</ol>';

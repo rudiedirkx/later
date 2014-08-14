@@ -24,6 +24,11 @@ else if ( isset($_GET['group'], $_GET['id']) ) {
 	exit('OK');
 }
 
+else if ( isset($_GET['actualize']) ) {
+	$db->update('urls', array('o' => time()), array('user_id' => $user->id, 'id' => $_GET['actualize'], 'archive' => 0));
+	exit('OK');
+}
+
 $urlFilter = @$_GET['url_filter'] && trim($_GET['url_filter']) != '' ? $db->replaceholders(' AND url LIKE ?', array('%' . trim($_GET['url_filter']) . '%')) : '';
 
 $limit = 25;

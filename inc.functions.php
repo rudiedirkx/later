@@ -1,5 +1,24 @@
 <?php
 
+function nth( $n ) {
+	$q = (int)substr($n, -1);
+	$trailer = 'th';
+
+	switch ( $q ) {
+		case 1:
+			$trailer = 'st';
+			break;
+		case 2:
+			$trailer = 'nd';
+			break;
+		case 3:
+			$trailer = 'rd';
+			break;
+	}
+
+	return $n . $trailer;
+}
+
 function html_options( $options, $selected = null, $empty = '' ) {
 	$html = '';
 	$empty && $html .= '<option>' . $empty;

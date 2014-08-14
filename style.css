@@ -17,7 +17,7 @@ p:first-child {
 input {
 	padding: 7px 5px;
 }
-input:not([type="submit"]) {
+input:not([type="submit"]):not([type="checkbox"]) {
 	width: 100%;
 }
 input[type="submit"] {

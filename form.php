@@ -5,7 +5,7 @@ require 'inc.bootstrap.php';
 is_logged_in(true);
 
 $id = (int)@$_GET['id'];
-$bm = $db->select('urls', compact('id'))->first() ?: new stdClass;
+$bm = $db->select('urls', compact('id'))->first();
 
 if ( isset($_POST['url'], $_POST['title'], $_POST['group']) ) {
 	$url = trim($_POST['url']);
@@ -18,16 +18,28 @@ if ( isset($_POST['url'], $_POST['title'], $_POST['group']) ) {
 
 	do_save($url, $title, $id, $group);
 
+	if ( $id && @$_POST['actualize'] ) {
+		$db->update('urls', array('o' => time()), array('user_id' => $user->id, 'id' => $id, 'archive' => 0));
+	}
+
 	do_redirect('index');
 	exit('Bookmark saved');
 }
 
 require 'tpl.header.php';
 
+$index = $bm ? $db->count('urls', 'archive = ? AND o > ?', array(0, $bm->o)) : -1;
+
 ?>
 <form method="post" action>
 	<p class="form-item">URL: <input autofocus type="url" name="url" placeholder="Mandatory URL..." required value="<?= html(@$bm->url) ?>" /></p>
 	<p class="form-item">Title: <input name="title" placeholder="Optional title..." value="<?= html(@$bm->title) ?>" /></p>
 	<p class="form-item">Group: <input name="group" placeholder="Optional group..." value="<?= html(@$bm->group) ?>" /></p>
-	<p><input type="submit" value="Save" /></p>
+	<p>
+		<input type="submit" value="Save" />
+		<? if ($bm && !$bm->archive): ?>
+			&nbsp;
+			<label><input type="checkbox" name="actualize" /> Move to the top? (Currently ~ <?= nth($index) ?>.)</label>
+		<? endif ?>
+	</p>
 </form>

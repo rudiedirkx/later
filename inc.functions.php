@@ -49,7 +49,7 @@ function do_logout() {
 }
 
 function html( $text ) {
-	return htmlspecialchars($text, ENT_QUOTES, 'UTF-8') ?: htmlspecialchars($text, ENT_QUOTES, 'ISO-8859-1');
+	return htmlspecialchars($text ?: '', ENT_QUOTES, 'UTF-8') ?: htmlspecialchars($text ?: '', ENT_QUOTES, 'ISO-8859-1');
 }
 
 function get_css() {

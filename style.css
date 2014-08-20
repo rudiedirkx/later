@@ -36,7 +36,10 @@ input[type="submit"] {
 	background-color: #eee;
 }
 .inline-filter .search:not(:focus) {
-	width: 2em;
+	width: 3em;
+}
+.inline-filter .search:focus {
+	padding: 13px;
 }
 .inline-filter .submit {
 	display: none;

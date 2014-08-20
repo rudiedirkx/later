@@ -31,7 +31,7 @@ require 'tpl.header.php';
 $index = $bm ? $db->count('urls', 'archive = ? AND o > ?', array(0, $bm->o)) : -1;
 
 ?>
-<form method="post" action>
+<form method="post" action autocomplete="off">
 	<p class="form-item">URL: <input autofocus type="url" name="url" placeholder="Mandatory URL..." required value="<?= html(@$bm->url) ?>" /></p>
 	<p class="form-item">Title: <input name="title" placeholder="Optional title..." value="<?= html(@$bm->title) ?>" /></p>
 	<p class="form-item">Group: <input name="group" placeholder="Optional group..." value="<?= html(@$bm->group) ?>" /></p>
@@ -43,3 +43,5 @@ $index = $bm ? $db->count('urls', 'archive = ? AND o > ?', array(0, $bm->o)) : -
 		<? endif ?>
 	</p>
 </form>
+
+<p><input type="checkbox" onchange="document.querySelector('form').autocomplete = this.checked ? 'on' : 'off'" /> Textfield autocomplete?</p>

@@ -23,7 +23,7 @@ echo $total;
 echo $realTotal ? ' (' . $realTotal . ')' : '';
 echo ' archived <a href="form.php">+</a> / ';
 echo '<a href="index.php">...</a> / ';
-echo '<form class="inline-filter"><input name="url_filter" placeholder="Filter URL..." class="search" /> <input type="submit" class="submit" /></form>';
+echo '<form class="inline-filter"><input name="url_filter" placeholder="Filter URL..." class="search" autocomplete="off" /> <input type="submit" class="submit" /></form>';
 echo '</h3>';
 
 require 'tpl.bookmarks.php';

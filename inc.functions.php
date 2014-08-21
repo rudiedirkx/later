@@ -69,6 +69,7 @@ function do_save( $url, $title, $id = null, $group = '' ) {
 			$title = $match[1];
 			$title = strtr($title, array(
 				'&trade;' => '™',
+				'&rsquo;' => '’',
 			));
 			$title = html_entity_decode($title);
 			$title = preg_replace_callback('/&#(\d+);/', function($match) {

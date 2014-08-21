@@ -5,7 +5,7 @@ require 'inc.bootstrap.php';
 is_logged_in(true);
 
 $id = (int)@$_GET['id'];
-$bm = $db->select('urls', compact('id'))->first();
+$bm = $id ? $db->select('urls', compact('id'))->first() : false;
 
 if ( isset($_POST['url'], $_POST['title'], $_POST['group']) ) {
 	$url = trim($_POST['url']);

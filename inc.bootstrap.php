@@ -15,6 +15,10 @@ if ( !$db ) {
 	exit('No database connecto...');
 }
 
+// Screw ACID, go SPEED!
+$db->execute('PRAGMA synchronous=OFF');
+$db->execute('PRAGMA journal_mode=OFF');
+
 $schema = require 'inc.db-schema.php';
 require 'inc.ensure-db-schema.php';
 

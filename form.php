@@ -28,7 +28,7 @@ if ( isset($_POST['url'], $_POST['title'], $_POST['group']) ) {
 
 require 'tpl.header.php';
 
-$index = $bm ? $db->count('urls', 'archive = ? AND o > ?', array(0, $bm->o)) : -1;
+$index = $bm ? $db->count('urls', 'archive = ? AND o >= ?', array(0, $bm->o)) : -1;
 
 ?>
 <form method="post" action autocomplete="off">
@@ -39,7 +39,7 @@ $index = $bm ? $db->count('urls', 'archive = ? AND o > ?', array(0, $bm->o)) : -
 		<input type="submit" value="Save" />
 		<? if ($bm && !$bm->archive): ?>
 			&nbsp;
-			<label><input type="checkbox" name="actualize" /> Move to the top? (Currently ~ <?= nth($index) ?>.)</label>
+			<label><input type="checkbox" name="actualize" /> Move to top (currently ~<?= nth($index) ?>)?</label>
 		<? endif ?>
 	</p>
 </form>

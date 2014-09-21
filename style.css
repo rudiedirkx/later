@@ -130,10 +130,11 @@ h3 .sub {
 	font-size: 140%;
 	line-height: 1em;
 	text-decoration: none;
-	color: #aaa;
+	color: #000;
+	opacity: 0.3;
 }
 .bookmarks .is-favorite .favorite a {
-	color: #000;
+	opacity: 1.0;
 }
 .bookmarks .created {
 	float: right;

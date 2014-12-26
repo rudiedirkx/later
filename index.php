@@ -29,13 +29,26 @@ else if ( isset($_GET['actualize']) ) {
 	exit('OK');
 }
 
-$urlFilter = @$_GET['url_filter'] && trim($_GET['url_filter']) != '' ? $db->replaceholders(' AND url LIKE ?', array('%' . trim($_GET['url_filter']) . '%')) : '';
+$urlFilter = @$_GET['url_filter'] && trim($_GET['url_filter']) != '' ? $db->replaceholders(' AND u.url LIKE ?', array('%' . trim($_GET['url_filter']) . '%')) : '';
 
 $limit = 25;
 $page = (int)@$_GET['page'];
 $offset = $page * $limit;
-$bookmarks = $db->select('urls', 'user_id = ? AND archive = ?' . $urlFilter . ' ORDER BY o DESC LIMIT ' . $limit . ' OFFSET ' . $offset, array($user->id, 0));
+$bookmarks = $db->fetch("
+	SELECT *
+	FROM urls u
+	WHERE
+		u.user_id = ? AND
+		u.archive = '0'
+		" . $urlFilter . "
+	ORDER BY
+		IF(u.`group` = '' OR u.`group` IS NULL, u.o, (SELECT MAX(o) FROM urls WHERE `group` = u.`group`)) DESC,
+		u.o DESC
+	LIMIT " . $limit . "
+	OFFSET " . $offset . "
+", array($user->id));
 $bookmarks = $bookmarks->all();
+
 $groups = do_groups($bookmarks);
 
 $total = $db->count('urls', 'user_id = ? AND archive = ?' . $urlFilter, array($user->id, 0));

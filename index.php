@@ -42,7 +42,7 @@ $bookmarks = $db->fetch("
 		u.archive = '0'
 		" . $urlFilter . "
 	ORDER BY
-		IF(u.`group` = '' OR u.`group` IS NULL, u.o, (SELECT MAX(o) FROM urls WHERE `group` = u.`group`)) DESC,
+		IF(u.`group` = '' OR u.`group` IS NULL, u.o, (SELECT MAX(o) FROM urls WHERE `group` = u.`group` AND archive = '0')) DESC,
 		u.o DESC
 	LIMIT " . $limit . "
 	OFFSET " . $offset . "

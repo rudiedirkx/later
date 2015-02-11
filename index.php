@@ -29,7 +29,7 @@ else if ( isset($_GET['actualize']) ) {
 	exit('OK');
 }
 
-$urlFilter = @$_GET['url_filter'] && trim($_GET['url_filter']) != '' ? $db->replaceholders(' AND u.url LIKE ?', array('%' . trim($_GET['url_filter']) . '%')) : '';
+$urlFilter = @$_GET['url_filter'] && trim($_GET['url_filter']) != '' ? $db->replaceholders(' AND url LIKE ?', array('%' . trim($_GET['url_filter']) . '%')) : '';
 
 $limit = 25;
 $page = (int)@$_GET['page'];

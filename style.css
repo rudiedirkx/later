@@ -45,6 +45,19 @@ input[type="submit"] {
 	display: none;
 }
 
+.ajax.working {
+	-webkit-animation: ajaxworking linear 1s infinite;
+}
+
+@-webkit-keyframes ajaxworking {
+	from {
+		-webkit-transform: rotate(0deg);
+	}
+	to {
+		-webkit-transform: rotate(360deg);
+	}
+}
+
 h3 {
 	margin-bottom: 8px;
 }

@@ -76,6 +76,7 @@ function rAjax(href, done) {
 		}
 
 		alert('Error: ' + this.responseText);
+		document.querySelector('.working').classList.remove('working');
 	};
 	xhr.open('get', href, true);
 	xhr.send();
@@ -83,6 +84,7 @@ function rAjax(href, done) {
 [].forEach.call(document.querySelectorAll('.ajax'), function(el) {
 	el.addEventListener('click', function(e) {
 		e.preventDefault();
+		this.classList.add('working');
 		rAjax(el.href);
 	});
 });
@@ -93,6 +95,7 @@ function rAjax(href, done) {
 			id = this.parentNode.parentNode.getAttribute('data-id'),
 			base = '<?= get_url('index', array('group' => 'GROUP', 'id' => 'ID')) ?>',
 			href = base.replace('GROUP', encodeURIComponent(group)).replace('ID', id);
+		this.classList.add('working');
 		rAjax(href);
 	});
 });

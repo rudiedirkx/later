@@ -170,8 +170,11 @@ h3 .sub {
 }
 .bookmarks .change-group select {
 	width: 3em;
+	overflow: hidden;
+	padding: 0 4px;
 	word-break: normal;
-	text-transform: uppercase;
+    -webkit-appearance: none;
+    text-align: center;
 }
 .bookmarks .edit a {
 	background-color: blue;

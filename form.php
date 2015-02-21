@@ -12,6 +12,10 @@ if ( isset($_POST['url'], $_POST['title'], $_POST['group']) ) {
 	$title = trim($_POST['title']);
 	$group = trim($_POST['group']);
 
+	if ( !preg_match('#^\w+://#', $url) ) {
+		$url = 'http://' . $url;
+	}
+
 	if ( !($_url = parse_url($url)) || !@$_url['host'] ) {
 		exit('Invalid URL');
 	}
@@ -31,10 +35,19 @@ require 'tpl.header.php';
 $index = $bm ? $db->count('urls', 'archive = ? AND o >= ?', array(0, $bm->o)) : -1;
 
 ?>
-<form method="post" action autocomplete="off">
-	<p class="form-item">URL: <input autofocus type="url" name="url" placeholder="Mandatory URL..." required value="<?= html(@$bm->url) ?>" /></p>
-	<p class="form-item">Title: <input name="title" placeholder="Optional title..." value="<?= html(@$bm->title) ?>" /></p>
-	<p class="form-item">Group: <input name="group" placeholder="Optional group..." value="<?= html(@$bm->group) ?>" /></p>
+<form method="post" action novalidate autocomplete="off">
+	<p class="form-item">
+		URL:
+		<input autofocus type="url" name="url" placeholder="Mandatory URL..." required value="<?= html(@$bm->url) ?>" />
+	</p>
+	<p class="form-item">
+		Title:
+		<input name="title" placeholder="Optional title..." value="<?= html(@$bm->title) ?>" />
+	</p>
+	<p class="form-item">
+		Group:
+		<input name="group" placeholder="Optional group..." value="<?= html(@$bm->group) ?>" />
+	</p>
 	<p>
 		<input type="submit" value="Save" />
 		<? if ($bm && !$bm->archive): ?>

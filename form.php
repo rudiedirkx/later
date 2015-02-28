@@ -33,6 +33,7 @@ if ( isset($_POST['url'], $_POST['title'], $_POST['group']) ) {
 require 'tpl.header.php';
 
 $index = $bm ? $db->count('urls', 'archive = ? AND o >= ?', array(0, $bm->o)) : -1;
+$groupOptions = $db->select_fields('urls', '"group", "group"', 'archive = ? AND "group" <> ? GROUP BY "group"', array(0, ''));
 
 ?>
 <form method="post" action novalidate autocomplete="off">
@@ -46,7 +47,10 @@ $index = $bm ? $db->count('urls', 'archive = ? AND o >= ?', array(0, $bm->o)) : 
 	</p>
 	<p class="form-item">
 		Group:
-		<input name="group" placeholder="Optional group..." value="<?= html(@$bm->group) ?>" />
+		<input name="group" placeholder="Optional group..." value="<?= html(@$bm->group) ?>" list="groups" />
+		<datalist id="groups">
+			<?= html_options($groupOptions) ?>
+		</datalist>
 	</p>
 	<p>
 		<input type="submit" value="Save" />

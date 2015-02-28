@@ -7,7 +7,7 @@ foreach ( $_list as $g => $bm ) {
 	if ( is_array($bm) ) {
 		$groups = $bm;
 		echo '<li class="multiple">';
-		echo '<div class="group-header">' . $g . '</div>';
+		echo '<div class="group-header">' . $g . ' (<a class="filter" href="?group_filter=' . urlencode($g) . '">filter</a>)</div>';
 		$inner = true;
 		require 'tpl.bookmarks.php';
 		$inner = false;
@@ -35,7 +35,7 @@ foreach ( $_list as $g => $bm ) {
 	// if ( $bm->group ) {
 		// echo '<div class="group">[' . $bm->group . ']</div>';
 	// }
-	echo '<div class="host"><a href="/readre/read.php?url=' . urlencode($bm->url) . '">' . $host . '</a></div>';
+	echo '<div class="host">' . $host . '</div>';
 	if ( @$groupOptions ) {
 		echo '<div class="change-group"><select><option value>-</option>' . html_options($groupOptions, $bm->group) . '</select></div>';
 	}

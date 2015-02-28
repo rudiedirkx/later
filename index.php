@@ -29,7 +29,8 @@ else if ( isset($_GET['actualize']) ) {
 	exit('OK');
 }
 
-$urlFilter = @$_GET['url_filter'] && trim($_GET['url_filter']) != '' ? $db->replaceholders(' AND url LIKE ?', array('%' . trim($_GET['url_filter']) . '%')) : '';
+$urlFilter = trim(@$_GET['url_filter']) ? $db->replaceholders(' AND url LIKE ?', array('%' . trim($_GET['url_filter']) . '%')) : '';
+$groupFilter = trim(@$_GET['group_filter']) ? $db->replaceholders(' AND `group` = ?', array(trim($_GET['group_filter']))) : '';
 
 $limit = 25;
 $page = (int)@$_GET['page'];
@@ -41,6 +42,7 @@ $bookmarks = $db->fetch("
 		u.user_id = ? AND
 		u.archive = '0'
 		" . $urlFilter . "
+		" . $groupFilter . "
 	ORDER BY
 		IF(u.`group` = '' OR u.`group` IS NULL, u.o, (SELECT MAX(o) FROM urls WHERE `group` = u.`group` AND archive = '0')) DESC,
 		u.o DESC
@@ -51,8 +53,8 @@ $bookmarks = $bookmarks->all();
 
 $groups = do_groups($bookmarks);
 
-$total = $db->count('urls', 'user_id = ? AND archive = ?' . $urlFilter, array($user->id, 0));
-$realTotal = $urlFilter ? $db->count('urls', 'user_id = ? AND archive = ?', array($user->id, 0)) : 0;
+$total = $db->count('urls', 'user_id = ? AND archive = ?' . $urlFilter . $groupFilter, array($user->id, 0));
+$realTotal = $urlFilter || $groupFilter ? $db->count('urls', 'user_id = ? AND archive = ?', array($user->id, 0)) : 0;
 
 $groupOptions = $db->select_fields('urls', '"group", "group"', 'archive = ? AND "group" <> ? GROUP BY "group"', array(0, ''));
 

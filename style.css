@@ -84,6 +84,12 @@ h3 .sub {
 	text-transform: uppercase;
 	letter-spacing: 1px;
 }
+.group-header a.filter {
+	line-height: 1;
+	text-transform: none;
+	text-decoration: none;
+	color: green;
+}
 .bookmarks li {
 	padding: 8px;
 	background-color: #eee;
@@ -154,6 +160,7 @@ h3 .sub {
 }
 .bookmarks .host {
 	float: left;
+	text-decoration: underline;
 }
 .bookmarks .group {
 	margin-right: .5em;

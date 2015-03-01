@@ -101,6 +101,10 @@ h3 .sub {
 .bookmarks li + li {
 	margin-top: 8px;
 }
+.bookmarks li.multiple + li {
+	margin-top: 16px;
+	padding-top: 16px;
+}
 .multiple .bookmarks li + li {
 	margin-top: 0;
 	border-top: solid 1px #ddd;

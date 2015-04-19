@@ -42,7 +42,7 @@ else {
 	div.onclick = function(e) {
 		this.remove();
 	};
-	document.body.appendChild(div);
+	document.body.insertBefore(div, document.body.firstElement);
 	setTimeout(function() {
 		try {
 			div.style.opacity = 0;

@@ -38,17 +38,17 @@ else {
 
 	var div = document.createElement('div');
 	div.textContent = '<?= addslashes($text) ?>';
-	div.setAttribute('style', 'z-index: 29374933; position: fixed; left: 20px; top: 20px; border: solid 20px <?= $color ?>; padding: 30px 20px; background: white; color: black; font-size: 30px; cursor: pointer; transition: opacity 500ms linear');
+	div.setAttribute('style', 'z-index: 2000999999; position: fixed; left: 20px; top: 50px; border: solid 20px <?= $color ?>; padding: 30px 20px; background: white; color: black; font-size: 30px; cursor: pointer; transition: opacity 500ms linear');
 	div.onclick = function(e) {
 		this.remove();
 	};
-	document.body.insertBefore(div, document.body.firstElement);
+	document.body.insertBefore(div, document.body.firstElementChild);
 	setTimeout(function() {
 		try {
 			div.style.opacity = 0;
 			setTimeout(function() {
 				div.remove();
-			}, 500);
+			}, 600);
 		} catch (ex) {}
 	}, <?= $hide ?>);
 

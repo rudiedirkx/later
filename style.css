@@ -20,7 +20,8 @@ input {
 input:not([type="submit"]):not([type="checkbox"]) {
 	width: 100%;
 }
-input[type="submit"] {
+input[type="submit"],
+button {
 	padding: 7px 14px;
 }
 

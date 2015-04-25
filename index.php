@@ -78,4 +78,4 @@ $bookmarklet = "javascript: document.head.appendChild((function(el) { el.src='" 
 
 ?>
 
-<p><a href="<?= $bookmarklet ?>">Bookmarklet</a> (<a href onclick="prompt('Copy this:', '<?= addslashes($bookmarklet) ?>'); return false">copy</a>)</p>
+<p><a href="<?= $bookmarklet ?>">Drag this to your bookmarks</a> or (<a href onclick="prompt('Copy this:', '<?= addslashes($bookmarklet) ?>'); return false">copy it</a>)</p>

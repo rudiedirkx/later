@@ -53,6 +53,8 @@ $bookmarks = $bookmarks->all();
 
 $groups = do_groups($bookmarks);
 
+$groupTotals = $db->select_fields('urls', '"group", COUNT(1)', 'archive = ? AND "group" <> ? GROUP BY "group"', array(0, ''));
+
 $total = $db->count('urls', 'user_id = ? AND archive = ?' . $urlFilter . $groupFilter, array($user->id, 0));
 $realTotal = $urlFilter || $groupFilter ? $db->count('urls', 'user_id = ? AND archive = ?', array($user->id, 0)) : 0;
 

@@ -7,7 +7,9 @@ foreach ( $_list as $g => $bm ) {
 	if ( is_array($bm) ) {
 		$groups = $bm;
 		echo '<li class="multiple">';
-		echo '<div class="group-header">' . $g . ' (<a class="filter" href="?group_filter=' . urlencode($g) . '">filter</a>)</div>';
+		$groupTotal = isset($groupTotals[$g]) ? ' (' . (count($bm) < $groupTotals[$g] ? count($bm) . ' / ' : '') . $groupTotals[$g] . ')' : '';
+		$filter = '<a class="filter" href="?group_filter=' . urlencode($g) . '">filter</a>';
+		echo '<div class="group-header">' . $g . $groupTotal . ' (' . $filter . ')</div>';
 		$inner = true;
 		require 'tpl.bookmarks.php';
 		$inner = false;

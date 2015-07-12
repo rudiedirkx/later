@@ -37,7 +37,12 @@ foreach ( $_list as $g => $bm ) {
 	// if ( $bm->group ) {
 		// echo '<div class="group">[' . $bm->group . ']</div>';
 	// }
-	echo '<div class="host">' . $host . '</div>';
+	if (LATER_READABILITY_PARSER_API_TOKEN) {
+		echo '<div class="host"><a href="' . get_url('read', array('id' => $id)) . '">' . $host . '</a></div>';
+	}
+	else {
+		echo '<div class="host">' . $host . '</div>';
+	}
 	if ( @$groupOptions ) {
 		echo '<div class="change-group"><select><option value>-</option>' . html_options($groupOptions, $bm->group) . '</select></div>';
 	}

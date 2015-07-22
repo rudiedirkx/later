@@ -12,17 +12,21 @@ if ( isset($_POST['url'], $_POST['title'], $_POST['group']) ) {
 	$title = trim($_POST['title']);
 	$group = trim($_POST['group']);
 
+	// Make it start with http:// if no scheme was provided
 	if ( !preg_match('#^\w+://#', $url) ) {
 		$url = 'http://' . $url;
 	}
 
-	if ( !($_url = parse_url($url)) || !@$_url['host'] ) {
+	// Must be URL-parsable, no crazy stuff allowed
+	if ( !get_valid_url($url) ) {
 		exit('Invalid URL');
 	}
 
+	// Insert or update
 	do_save($url, $title, $id, $group);
 
-	if ( $id && @$_POST['actualize'] ) {
+	// Move to top
+	if ( $id && !empty($_POST['actualize']) ) {
 		$db->update('urls', array('o' => time()), array('user_id' => $user->id, 'id' => $id, 'archive' => 0));
 	}
 

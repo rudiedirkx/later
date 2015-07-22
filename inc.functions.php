@@ -1,5 +1,8 @@
 <?php
 
+/**
+ *
+ */
 function nth( $n ) {
 	$q = (int)substr($n, -1);
 	$trailer = 'th';
@@ -19,6 +22,9 @@ function nth( $n ) {
 	return $n . $trailer;
 }
 
+/**
+ *
+ */
 function html_options( $options, $selected = null, $empty = '' ) {
 	$html = '';
 	$empty && $html .= '<option>' . $empty;
@@ -29,6 +35,9 @@ function html_options( $options, $selected = null, $empty = '' ) {
 	return $html;
 }
 
+/**
+ *
+ */
 function do_groups($bookmarks) {
 	$groups = array();
 	foreach ( $bookmarks as $bm ) {
@@ -42,16 +51,25 @@ function do_groups($bookmarks) {
 	return $groups;
 }
 
+/**
+ *
+ */
 function do_logout() {
 	if ( isset($_SESSION[SESSION_NAME]) ) {
 		unset($_SESSION[SESSION_NAME]);
 	}
 }
 
+/**
+ *
+ */
 function html( $text ) {
 	return htmlspecialchars((string)$text, ENT_QUOTES, 'UTF-8') ?: htmlspecialchars((string)$text, ENT_QUOTES, 'ISO-8859-1');
 }
 
+/**
+ *
+ */
 function get_css() {
 	$file = __DIR__ . '/style.css';
 	$css = trim(file_get_contents($file));
@@ -60,8 +78,22 @@ function get_css() {
 	return $css;
 }
 
+/**
+ *
+ */
+function get_valid_url( $url, &$_url = null ) {
+	return ($_url = parse_url($url)) && !empty($_url['host']);
+}
+
+/**
+ *
+ */
 function do_save( $url, $title, $id = null, $group = '' ) {
 	global $db, $user, $fgcContext;
+
+	if ( !get_valid_url($url) ) {
+		return false;
+	}
 
 	if ( !$title ) {
 		$html = @file_get_contents($url, false, $fgcContext);
@@ -103,20 +135,29 @@ function do_save( $url, $title, $id = null, $group = '' ) {
 	}
 
 	// New, so insert
-	$db->insert('urls', array('url' => $url, 'created' => time(), 'user_id' => $user->id) + $save);
+	return $db->insert('urls', array('url' => $url, 'created' => time(), 'user_id' => $user->id) + $save);
 }
 
+/**
+ *
+ */
 function get_url( $path, $query = array() ) {
 	$query = $query ? '?' . http_build_query($query) : '';
 	$path = $path ? $path . '.php' : basename($_SERVER['SCRIPT_NAME']);
 	return $path . $query;
 }
 
+/**
+ *
+ */
 function do_redirect( $path, $query = array() ) {
 	$url = get_url($path, $query);
 	header('Location: ' . $url);
 }
 
+/**
+ *
+ */
 function is_logged_in( $act = true ) {
 	global $db, $user;
 	if ( $user ) {

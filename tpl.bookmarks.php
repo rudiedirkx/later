@@ -20,7 +20,7 @@ foreach ( $_list as $g => $bm ) {
 	$id = $bm->id;
 
 	$_url = parse_url($bm->url);
-	$host = substr($_url['host'], 0, 4) == 'www.' ? substr($_url['host'], 4) : $_url['host'];
+	$host = preg_replace('#^www\.#', '', @$_url['host'] ?: 'invalid url');
 
 	$classes = array('single');
 	$bm->favorite && $classes[] = 'is-favorite';

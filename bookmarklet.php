@@ -14,22 +14,27 @@ $hide = 3000000;
 if ( $loggedIn ) {
 	if ( isset($_GET['url'], $_GET['title']) ) {
 
-		do_save($_GET['url'], $_GET['title']);
+		if ( do_save($_GET['url'], $_GET['title']) ) {
+			$color = 'green';
+			$hide = 3000;
+		}
 
-		$color = 'green';
-		$hide = 3000;
+		// Wrong URL, probably
+		else {
+			$text = "NOT saved. Wrong URL?";
+		}
 
 	}
 
 	// Missing parameters
 	else {
-		$text = "Missing parameters";
+		$text = "Missing parameters.";
 	}
 }
 
 // Not logged in
 else {
-	$text = "You're not logged in";
+	$text = "You're not logged in.";
 }
 
 ?>

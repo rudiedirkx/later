@@ -76,7 +76,8 @@ require 'tpl.bookmarks.php';
 $https = !empty($_SERVER['HTTPS']) && strtolower($_SERVER['HTTPS']) != 'off';
 $protocol = $https ? 'https' : 'http';
 $domain = $_SERVER['HTTP_HOST'];
-$bookmarklet = "javascript: (document.head||document.documentElement).appendChild((function(el) { el.src='" . $protocol . "://" . $domain . "/later/bookmarklet.php?url=' + encodeURIComponent(location.href) + '&title=' + encodeURIComponent(document.title); return el; })(document.createElement('script'))); void(0)";
+$path = dirname($_SERVER['SCRIPT_NAME']);
+$bookmarklet = "javascript: (document.head||document.documentElement).appendChild((function(el) { el.src='" . $protocol . "://" . $domain . str_replace('//', '/', $path . '/') . "bookmarklet.php?url=' + encodeURIComponent(location.href) + '&title=' + encodeURIComponent(document.title); return el; })(document.createElement('script'))); void(0)";
 
 ?>
 

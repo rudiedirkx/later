@@ -36,11 +36,12 @@ button {
 	border: solid 0px #aaa;
 	background-color: #eee;
 }
-.inline-filter .search:not(:focus) {
-	width: 3em;
+.inline-filter .search:not(.focus) {
+	width: 4em;
 }
-.inline-filter .search:focus {
+.inline-filter .search.focus {
 	padding: 13px;
+	box-shadow: 0 0 1em 0 rgba(0,0,0,0.3) inset;
 }
 .inline-filter .submit {
 	display: none;

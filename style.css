@@ -81,10 +81,27 @@ h3 .sub {
 	padding: 8px;
 	font-weight: bold;
 	font-size: 120%;
-	border-bottom: solid 1px #ddd;
-	line-height: 1;
 	text-transform: uppercase;
 	letter-spacing: 1px;
+}
+.multiple:not(.hidden) .group-header {
+	border-bottom: solid 1px #ddd;
+}
+.group-header,
+.group-header * {
+	line-height: 1;
+}
+.group-header a.group-name {
+	text-decoration: none;
+	color: black;
+}
+.group-header a.group-name:before {
+	content: "\2228";
+	margin-right: .25em;
+}
+.multiple.hidden .group-header a.group-name:before {
+	content: "\2227";
+	margin-right: .25em;
 }
 .group-header a.filter {
 	line-height: 1;
@@ -103,9 +120,12 @@ h3 .sub {
 .bookmarks li + li {
 	margin-top: 8px;
 }
-.bookmarks li.multiple + li {
+.bookmarks li.multiple:not(.hidden) + li {
 	margin-top: 16px;
 	padding-top: 16px;
+}
+.multiple.hidden > ol {
+	display: none;
 }
 .multiple .bookmarks li + li {
 	margin-top: 0;

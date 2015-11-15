@@ -3,6 +3,22 @@
 /**
  *
  */
+function get_token( $name ) {
+	return sha1('later:' . (@$_SESSION[SESSION_NAME]['salt'] ?: rand()) . ':' . $name);
+}
+
+/**
+ *
+ */
+function do_tokencheck( $name ) {
+	if ( @$_REQUEST['_token'] !== get_token($name) ) {
+		exit("Access denied\n");
+	}
+}
+
+/**
+ *
+ */
 function nth( $n ) {
 	$q = (int)substr($n, -1);
 	$trailer = 'th';
@@ -170,6 +186,7 @@ function is_logged_in( $act = true ) {
 		$id = $_SESSION[SESSION_NAME]['uid'];
 		$user = $db->select('users', compact('id'))->first();
 		if ( $user ) {
+			$user->hide_groups = array_filter(explode(',', $user->hide_groups ?: ''));
 			return true;
 		}
 	}
@@ -181,6 +198,7 @@ function is_logged_in( $act = true ) {
 			->select('users', 'email = ? AND password = SHA1(CONCAT(id, ?, ?))', $args)
 			->first();
 		if ( $user ) {
+			$user->hide_groups = array_filter(explode(',', $user->hide_groups ?: ''));
 			return true;
 		}
 	}

@@ -56,6 +56,7 @@ if ( isset($_POST['user'], $_POST['pass']) ) {
 		@session_start();
 
 		$_SESSION[SESSION_NAME]['uid'] = $user->id;
+		$_SESSION[SESSION_NAME]['salt'] = rand();
 
 		do_redirect('index');
 		exit;

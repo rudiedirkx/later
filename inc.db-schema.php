@@ -5,6 +5,7 @@ return array(
 		'id' => array('pk' => true),
 		'email',
 		'password',
+		'hide_groups',
 	),
 	'urls' => array(
 		'id' => array('pk' => true),

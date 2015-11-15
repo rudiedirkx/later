@@ -5,27 +5,54 @@ require 'inc.bootstrap.php';
 is_logged_in(true);
 
 if ( isset($_GET['archive']) ) {
+	// do_tokencheck('archive');
+
 	$db->update('urls', array('archive' => 1, 'o' => time()), array('user_id' => $user->id, 'id' => $_GET['archive']));
 	exit('OK');
 }
 
 else if ( isset($_GET['unarchive']) ) {
+	// do_tokencheck('unarchive');
+
 	$db->update('urls', array('archive' => 0, 'o' => time()), array('user_id' => $user->id, 'id' => $_GET['unarchive']));
 	exit('OK');
 }
 
 else if ( isset($_GET['favorite'], $_GET['value']) ) {
+	// do_tokencheck('favorite');
+
 	$db->update('urls', array('favorite' => (int)(bool)$_GET['value']), array('user_id' => $user->id, 'id' => $_GET['favorite']));
 	exit('OK');
 }
 
 else if ( isset($_GET['group'], $_GET['id']) ) {
+	// do_tokencheck('group');
+
 	$db->update('urls', array('group' => $_GET['group'] ?: ''), array('user_id' => $user->id, 'id' => $_GET['id'], 'archive' => 0));
 	exit('OK');
 }
 
 else if ( isset($_GET['actualize']) ) {
+	// do_tokencheck('actualize');
+
 	$db->update('urls', array('o' => time()), array('user_id' => $user->id, 'id' => $_GET['actualize'], 'archive' => 0));
+	exit('OK');
+}
+
+else if ( isset($_GET['group'], $_GET['hidden']) ) {
+	do_tokencheck('toggleGroup');
+
+	if ( $_GET['hidden'] ) {
+		$user->hide_groups[] = $_GET['group'];
+		$user->hide_groups = array_values(array_unique($user->hide_groups));
+	}
+	else {
+		if ( ($index = array_search($_GET['group'], $user->hide_groups)) !== false ) {
+			array_splice($user->hide_groups, $index, 1);
+		}
+	}
+
+	$db->update('users', array('hide_groups' => implode(',', $user->hide_groups)), array('id' => $user->id));
 	exit('OK');
 }
 

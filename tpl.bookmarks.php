@@ -5,15 +5,23 @@ $_list = @$groups ?: $bookmarks;
 echo '<ol class="bookmarks">';
 foreach ( $_list as $g => $bm ) {
 	if ( is_array($bm) ) {
-		$groups = $bm;
-		echo '<li class="multiple">';
+		$hidden = in_array($g, $user->hide_groups) ? 'hidden' : '';
+		echo '<li class="multiple ' . $hidden . '" data-group="' . html($g) . '">';
 		$groupTotal = isset($groupTotals[$g]) ? ' (' . (count($bm) < $groupTotals[$g] ? count($bm) . ' / ' : '') . $groupTotals[$g] . ')' : '';
 		$filter = '<a class="filter" href="?group_filter=' . urlencode($g) . '">filter</a>';
-		echo '<div class="group-header">' . $g . $groupTotal . ' (' . $filter . ')</div>';
+		$name = '<a href="' . get_url('index', array(
+			'group' => $g,
+			'hidden' => 'HIDDEN',
+			'_token' => get_token('toggleGroup'),
+		)) . '" class="group-name">' . $g . '</a>';
+		echo '<div class="group-header">' . $name . $groupTotal . ' (' . $filter . ')</div>';
+
 		$inner = true;
+		$groups = $bm;
 		require 'tpl.bookmarks.php';
 		$inner = false;
 		echo '</li>';
+
 		continue;
 	}
 
@@ -88,7 +96,7 @@ function rAjax(href, done) {
 	xhr.open('get', href, true);
 	xhr.send();
 }
-[].forEach.call(document.querySelectorAll('.ajax'), function(el) {
+[].forEach.call(document.querySelectorAll('a.ajax'), function(el) {
 	el.addEventListener('click', function(e) {
 		e.preventDefault();
 		this.classList.add('working');
@@ -104,6 +112,18 @@ function rAjax(href, done) {
 			href = base.replace('GROUP', encodeURIComponent(group)).replace('ID', id);
 		this.classList.add('working');
 		rAjax(href);
+	});
+});
+
+[].forEach.call(document.querySelectorAll('a.group-name'), function(el) {
+	el.addEventListener('click', function(e) {
+		e.preventDefault();
+		var group = this.parentNode.parentNode,
+			hidden = group.classList.toggle('hidden'),
+			base = this.getAttribute('href'),
+			href = base.replace('HIDDEN', Number(hidden));
+		this.classList.add('working');
+		rAjax(href, new Function);
 	});
 });
 </script>

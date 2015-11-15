@@ -8,6 +8,8 @@ $id = (int)@$_GET['id'];
 $bm = $id ? $db->select('urls', compact('id'))->first() : false;
 
 if ( isset($_POST['url'], $_POST['title'], $_POST['group']) ) {
+	do_tokencheck('save:' . $id);
+
 	$url = trim($_POST['url']);
 	$title = trim($_POST['title']);
 	$group = trim($_POST['group']);
@@ -41,6 +43,8 @@ $groupOptions = $db->select_fields('urls', '"group", "group"', 'archive = ? AND 
 
 ?>
 <form method="post" action novalidate autocomplete="off">
+	<input type="hidden" name="_token" value="<?= get_token('save:' . $id) ?>" />
+
 	<p class="form-item">
 		URL:
 		<input autofocus type="url" name="url" placeholder="Mandatory URL..." required value="<?= html(@$bm->url) ?>" />

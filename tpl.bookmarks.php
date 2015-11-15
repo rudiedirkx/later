@@ -36,10 +36,17 @@ foreach ( $_list as $g => $bm ) {
 	$archiveAction = $bm->archive ? 'unarchive' : 'archive';
 
 	echo '<li data-id="' . $bm->id . '" class="' . implode(' ', $classes) . '">';
-	echo '<div class="' . $archiveAction . '"><a class="ajax" href="' . get_url('index', array($archiveAction => $id)) . '">A</a></div>';
+	echo '<div class="' . $archiveAction . '"><a class="ajax" href="' . get_url('index', array(
+		$archiveAction => $id,
+		'_token' => get_token($archiveAction),
+	)) . '">A</a></div>';
 	echo '<div class="link">';
 	echo '  <a href="' . html($bm->url) . '">' . html($bm->title ?: $bm->url) . '</a>';
-	echo '  <div class="favorite"><a class="ajax" href="' . get_url('index', array('favorite' => $id, 'value' => (int)!$bm->favorite)) . '">♥</a></div>';
+	echo '  <div class="favorite"><a class="ajax" href="' . get_url('index', array(
+		'favorite' => $id,
+		'value' => (int)!$bm->favorite,
+		'_token' => get_token('favorite'),
+	)) . '">♥</a></div>';
 	echo '</div>';
 	echo '<div class="created">' . date(DT, $bm->created) . '</div>';
 	// if ( $bm->group ) {
@@ -56,7 +63,10 @@ foreach ( $_list as $g => $bm ) {
 	}
 	echo '<div class="edit"><a href="' . get_url('form', array('id' => $id)) . '">E</a></div>';
 	if ( !$bm->archive ) {
-		echo '<div class="actualize"><a class="ajax" href="' . get_url('index', array('actualize' => $id)) . '">▲</a></div>';
+		echo '<div class="actualize"><a class="ajax" href="' . get_url('index', array(
+			'actualize' => $id,
+			'_token' => get_token('actualize'),
+		)) . '">▲</a></div>';
 	}
 	echo '</li>';
 }
@@ -108,7 +118,11 @@ function rAjax(href, done) {
 	el.addEventListener('change', function(e) {
 		var group = this.value || '',
 			id = this.parentNode.parentNode.getAttribute('data-id'),
-			base = '<?= get_url('index', array('group' => 'GROUP', 'id' => 'ID')) ?>',
+			base = '<?= get_url('index', array(
+				'group' => 'GROUP',
+				'id' => 'ID',
+				'_token' => get_token('group'),
+			)) ?>',
 			href = base.replace('GROUP', encodeURIComponent(group)).replace('ID', id);
 		this.classList.add('working');
 		rAjax(href);
@@ -120,7 +134,7 @@ function rAjax(href, done) {
 		e.preventDefault();
 		var group = this.parentNode.parentNode,
 			hidden = group.classList.toggle('hidden'),
-			base = this.getAttribute('href'),
+			base = this.href,
 			href = base.replace('HIDDEN', Number(hidden));
 		this.classList.add('working');
 		rAjax(href, new Function);

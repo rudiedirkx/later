@@ -47,7 +47,7 @@ button {
 	display: none;
 }
 
-.ajax.working {
+.working {
 	-webkit-animation: ajaxworking linear 1s infinite;
 }
 

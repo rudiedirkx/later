@@ -116,14 +116,14 @@ function rAjax(href, done) {
 
 [].forEach.call(document.querySelectorAll('.change-group select'), function(el) {
 	el.addEventListener('change', function(e) {
-		var group = this.value || '',
-			id = this.parentNode.parentNode.getAttribute('data-id'),
-			base = '<?= get_url('index', array(
-				'group' => 'GROUP',
-				'id' => 'ID',
-				'_token' => get_token('group'),
-			)) ?>',
-			href = base.replace('GROUP', encodeURIComponent(group)).replace('ID', id);
+		var group = this.value || '';
+		var id = this.parentNode.parentNode.getAttribute('data-id');
+		var base = '<?= get_url('index', array(
+			'group' => '__GROUP__',
+			'id' => '__ID__',
+			'_token' => get_token('group'),
+		)) ?>';
+		var href = base.replace('__GROUP__', encodeURIComponent(group)).replace('__ID__', id);
 		this.classList.add('working');
 		rAjax(href);
 	});

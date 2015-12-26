@@ -11,7 +11,7 @@ foreach ( $_list as $g => $bm ) {
 		$filter = '<a class="filter" href="?group_filter=' . urlencode($g) . '">filter</a>';
 		$name = '<a href="' . get_url('index', array(
 			'group' => $g,
-			'hidden' => 'HIDDEN',
+			'hidden' => '__HIDDEN__',
 			'_token' => get_token('toggleGroup'),
 		)) . '" class="group-name">' . $g . '</a>';
 		echo '<div class="group-header">' . $name . $groupTotal . ' (' . $filter . ')</div>';
@@ -135,8 +135,7 @@ function rAjax(href, done) {
 		var group = this.parentNode.parentNode,
 			hidden = group.classList.toggle('hidden'),
 			base = this.href,
-			href = base.replace('HIDDEN', Number(hidden));
-		this.classList.add('working');
+			href = base.replace('__HIDDEN__', Number(hidden));
 		rAjax(href, new Function);
 	});
 });

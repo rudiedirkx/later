@@ -129,7 +129,7 @@ function do_save( $url, $title, $id = null, $group = '' ) {
 	$title = preg_replace('#\s+#', ' ', trim($title));
 
 	$save = array('title' => $title, 'url' => $url);
-	$group and $save['`group`'] = $group;
+	$group and $save['group'] = $group;
 
 	// Given id, only update, no extra logic, like order or archive
 	if ( $id ) {

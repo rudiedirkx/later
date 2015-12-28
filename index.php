@@ -104,8 +104,13 @@ $https = !empty($_SERVER['HTTPS']) && strtolower($_SERVER['HTTPS']) != 'off';
 $protocol = $https ? 'https' : 'http';
 $domain = $_SERVER['HTTP_HOST'];
 $path = dirname($_SERVER['SCRIPT_NAME']);
-$bookmarklet = "javascript: (document.head||document.documentElement).appendChild((function(el) { var div = document.createElement('div'); div.className = 'later-loading'; div.textContent = '. . .'; div.setAttribute('style', 'z-index: 2000999998; position: fixed; left: 20px; top: 50px; border: solid 20px black; padding: 10px 20px; background: white; color: black; font-size: 30px;'); document.body.insertBefore(div, document.body.firstElementChild); el.src='" . $protocol . "://" . $domain . str_replace('//', '/', $path . '/') . "bookmarklet.php?url=' + encodeURIComponent(location.href) + '&title=' + encodeURIComponent(document.title); return el; })((document.createElement||Document.prototype.createElement).call(document, 'script'))); void(0)";
+$base = $protocol . '://' . $domain . str_replace('//', '/', $path . '/') . 'bookmarklet.php';
+$bookmarklet = preg_replace('#[\r\n\t]#', '', str_replace('__BASE__', $base, file_get_contents(__DIR__ . '/bookmarklet.js')));
 
 ?>
 
-<p><a href="<?= $bookmarklet ?>">Drag this to your bookmarks</a> or (<a href onclick="prompt('Copy this:', '<?= addslashes($bookmarklet) ?>'); return false">copy it</a>)</p>
+<p>
+	<a href="<?= $bookmarklet ?>">Drag this to your bookmarks</a>
+	or
+	<a href onclick="prompt('Copy this:', '<?= addslashes($bookmarklet) ?>'); return false">click to copy</a>
+</p>

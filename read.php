@@ -41,6 +41,7 @@ require 'tpl.header.php';
 }
 body {
 	font-family: sans-serif;
+	max-width: 720px;
 }
 .author-date {
 	margin: 0;

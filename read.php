@@ -12,7 +12,9 @@ if ( !$bm || !LATER_READABILITY_PARSER_API_TOKEN ) {
 }
 
 // Fetch parsed article via Readability Parses API, or cached
-if ( file_exists($cacheFile = LATER_READABILITY_RESPONSE_CACHE . '/' . sha1($bm->url) . '.json') ) {
+$cacheFile = LATER_READABILITY_RESPONSE_CACHE . '/' . sha1($bm->url) . '.json';
+// exit($cacheFile);
+if ( file_exists($cacheFile) ) {
 	$response = file_get_contents($cacheFile);
 }
 else {
@@ -58,6 +60,9 @@ img {
 	width: auto;
 	height: auto;
 }
+.readability-reading {
+	background-color: #ddd;
+}
 </style>
 <?php
 
@@ -83,9 +88,43 @@ $html = strip_tags($html, $tags);
 // Parse img[srcset]
 // $html = preg_replace('#srcset="([^\s,]+)[^"]+"#', 'src="$1"', $html);
 // Print
-echo $html;
+echo '<div id="readability-body">' . $html . '</div>';
 
+?>
+<script>
+var paragraphs = document.querySelector('#readability-body').querySelectorAll('p, table');
+window.onscroll = function() {
+	var currentEl;
+	for (var i=0; i<paragraphs.length; i++) {
+		var p = paragraphs[i];
+		var elTop = p.getBoundingClientRect().top;
 
+		if (elTop > 50) {
+			break;
+		}
+
+		var currentEl = p;
+	}
+
+	var lastCurrentEl = document.querySelector('.readability-reading');
+	if (lastCurrentEl) {
+		lastCurrentEl.classList.remove('readability-reading');
+	}
+
+	currentEl.classList.add('readability-reading');
+	localStorage.reading_<?= $id ?>_p = [].indexOf.call(paragraphs, currentEl);
+};
+
+if (localStorage.reading_<?= $id ?>_p) {
+	var el = paragraphs[localStorage.reading_<?= $id ?>_p];
+	if (el) {
+		el.scrollIntoView();
+		window.scrollTo(0, (document.body.scrollTop || document.documentElement.scrollTop) - 50);
+		el.classList.add('readability-reading');
+	}
+}
+</script>
+<?php
 
 echo '<details>';
 echo '<summary>Debug</summary>';

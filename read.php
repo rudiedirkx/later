@@ -60,6 +60,11 @@ img {
 	width: auto;
 	height: auto;
 }
+blockquote {
+	margin-left: 10px;
+	border-left: solid 10px #ddd;
+	padding-left: 10px;
+}
 .readability-reading {
 	background-color: #ddd;
 }
@@ -82,7 +87,7 @@ $html = $response->content;
 // Strip tags
 $tags = array('a', 'abbr', 'acronym', 'address', 'article', 'aside', 'b', 'bdi', 'bdo', 'big', 'blockquote', 'br', 'caption', 'cite', 'code', 'col', 'colgroup', 'command', 'dd', 'del', 'details', 'dfn', 'div', 'dl', 'dt', 'em', 'figcaption', 'figure', 'footer', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'header', 'hgroup', 'hr', 'i', 'img', 'ins', 'kbd', 'li', 'mark', 'menu', 'meter', 'nav', 'ol', 'output', 'p', 'pre', 'progress', 'q', 'rp', 'rt', 'ruby', 's', 'samp', 'section', 'small', 'span', 'strong', 'sub', 'summary', 'sup', 'table', 'tbody', 'td', 'tfoot', 'th', 'thead', 'time', 'tr', 'tt', 'u', 'ul', 'var', 'wbr');
 $tags = implode(array_map(function($tag) {
-	return '<' . $tag . '><' . $tag . '/>';
+	return '<' . $tag . '>';
 }, $tags));
 $html = strip_tags($html, $tags);
 // Parse img[srcset]
@@ -92,7 +97,7 @@ echo '<div id="readability-body">' . $html . '</div>';
 
 ?>
 <script>
-var paragraphs = document.querySelector('#readability-body').querySelectorAll('p, table');
+var paragraphs = document.querySelector('#readability-body').querySelectorAll('p, table, ul, ol, li, blockquote');
 window.onscroll = function() {
 	var currentEl;
 	for (var i=0; i<paragraphs.length; i++) {

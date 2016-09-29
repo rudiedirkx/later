@@ -65,9 +65,6 @@ blockquote {
 	border-left: solid 10px #ddd;
 	padding-left: 10px;
 }
-.readability-reading {
-	background-color: #ddd;
-}
 </style>
 <?php
 
@@ -94,42 +91,6 @@ $html = strip_tags($html, $tags);
 // $html = preg_replace('#srcset="([^\s,]+)[^"]+"#', 'src="$1"', $html);
 // Print
 echo '<div id="readability-body">' . $html . '</div>';
-
-?>
-<script>
-var paragraphs = document.querySelector('#readability-body').querySelectorAll('p, table, ul, ol, li, blockquote');
-window.onscroll = function() {
-	var currentEl;
-	for (var i=0; i<paragraphs.length; i++) {
-		var p = paragraphs[i];
-		var elTop = p.getBoundingClientRect().top;
-
-		if (elTop > 50) {
-			break;
-		}
-
-		var currentEl = p;
-	}
-
-	var lastCurrentEl = document.querySelector('.readability-reading');
-	if (lastCurrentEl) {
-		lastCurrentEl.classList.remove('readability-reading');
-	}
-
-	currentEl.classList.add('readability-reading');
-	localStorage.reading_<?= $id ?>_p = [].indexOf.call(paragraphs, currentEl);
-};
-
-if (localStorage.reading_<?= $id ?>_p) {
-	var el = paragraphs[localStorage.reading_<?= $id ?>_p];
-	if (el) {
-		el.scrollIntoView();
-		window.scrollTo(0, (document.body.scrollTop || document.documentElement.scrollTop) - 50);
-		el.classList.add('readability-reading');
-	}
-}
-</script>
-<?php
 
 echo '<details>';
 echo '<summary>Debug</summary>';

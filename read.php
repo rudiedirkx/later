@@ -34,6 +34,7 @@ if ( !$response ) {
 
 $response = json_decode($response);
 
+$pageTitle = $response->title;
 require 'tpl.header.php';
 
 ?>

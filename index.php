@@ -101,6 +101,7 @@ echo '<a href="archive.php">...</a> / ';
 require 'tpl.inline-filter.php';
 echo '</h3>';
 
+$inner = false;
 require 'tpl.bookmarks.php';
 
 $https = !empty($_SERVER['HTTPS']) && strtolower($_SERVER['HTTPS']) != 'off';

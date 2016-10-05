@@ -114,6 +114,9 @@ h3 .sub {
 	background-color: #eee;
 	word-break: break-word;
 }
+.bookmarks.outer > li {
+	box-shadow: 0 0 2px #999;
+}
 .bookmarks li.multiple {
 	padding: 5px;
 }

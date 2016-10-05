@@ -2,7 +2,7 @@
 
 $_list = @$groups ?: $bookmarks;
 
-echo '<ol class="bookmarks">';
+echo '<ol class="bookmarks ' . ($inner ? 'inner' : 'outer') . '">';
 foreach ( $_list as $g => $bm ) {
 	if ( is_array($bm) ) {
 		$hidden = in_array($g, $user->hide_groups) ? 'hidden' : '';

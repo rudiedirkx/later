@@ -27,4 +27,5 @@ echo '<a href="index.php">...</a> / ';
 require 'tpl.inline-filter.php';
 echo '</h3>';
 
+$inner = false;
 require 'tpl.bookmarks.php';

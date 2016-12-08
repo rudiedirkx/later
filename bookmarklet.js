@@ -7,5 +7,5 @@ javascript:
 		document.body.insertBefore(div, document.body.firstElementChild);
 		el.src = '__BASE__?url=' + encodeURIComponent(location.href) + '&title=' + encodeURIComponent(document.title);
 		return el;
-	})(Document.prototype.createElement.call(document, 'script')));
+	})((document.createElement||Document.prototype.createElement).call(document, 'script')));
 	void(0);

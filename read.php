@@ -15,24 +15,33 @@ if ( !$bm || !LATER_READABILITY_PARSER_API_TOKEN ) {
 $cacheFile = LATER_READABILITY_RESPONSE_CACHE . '/' . sha1($bm->url) . '.json';
 // exit($cacheFile);
 if ( file_exists($cacheFile) ) {
-	$response = file_get_contents($cacheFile);
+	$response = json_decode(file_get_contents($cacheFile));
 }
 else {
 	$query = http_build_query(array(
-		'token' => LATER_READABILITY_PARSER_API_TOKEN,
 		'url' => $bm->url,
 	));
-	$response = @file_get_contents('https://readability.com/api/content/v1/parser?' . $query, false, $fgcContext);
-	if ( $response && is_writable(dirname($cacheFile)) ) {
+	$context = stream_context_create(array(
+		'http' => array(
+			// 'ignore_errors' => true,
+			'header' => [
+				'x-api-key: ' . LATER_READABILITY_PARSER_API_TOKEN,
+			],
+		),
+	));
+	$response = @file_get_contents('https://mercury.postlight.com/parser?' . $query, false, $context);
+	if ($response) {
+		$response = json_decode($response);
+	}
+
+	if ( $response && !empty($response->title) && is_writable(dirname($cacheFile)) ) {
 		@file_put_contents($cacheFile, $response);
 	}
 }
 
-if ( !$response ) {
-	exit("Can't download JSON");
+if ( !$response || empty($response->title) ) {
+	exit("Can't download JSON: <pre>" . print_r($response, 1) . "</pre>");
 }
-
-$response = json_decode($response);
 
 $pageTitle = $response->title;
 require 'tpl.header.php';

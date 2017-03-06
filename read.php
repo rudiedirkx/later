@@ -29,13 +29,13 @@ else {
 			],
 		),
 	));
-	$response = @file_get_contents('https://mercury.postlight.com/parser?' . $query, false, $context);
+	$response = file_get_contents('https://mercury.postlight.com/parser?' . $query, false, $context);
 	if ($response) {
 		$response = json_decode($response);
 	}
 
 	if ( $response && !empty($response->title) && is_writable(dirname($cacheFile)) ) {
-		@file_put_contents($cacheFile, $response);
+		@file_put_contents($cacheFile, json_encode($response));
 	}
 }
 

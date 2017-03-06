@@ -5,7 +5,8 @@ require 'inc.functions.php';
 
 header('Content-type: text/html; charset=utf-8');
 
-isset($_COOKIE[session_name()]) and session_start();
+ini_set('session.cookie_lifetime', 99999999);
+session_start();
 
 require WHERE_DB_GENERIC_AT . '/db_sqlite.php';
 

@@ -113,7 +113,7 @@ function do_save( $url, $title, $id = null, $group = '' ) {
 
 	if ( !$title ) {
 		$html = @file_get_contents($url, false, $fgcContext);
-		if ( $html && @preg_match('#<title>([^<]+)#i', $html, $match) ) {
+		if ( $html && @preg_match('#<title>([^<]+)</title>#i', $html, $match) ) {
 			$title = $match[1];
 			$title = strtr($title, array(
 				'&trade;' => '™',

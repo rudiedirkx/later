@@ -41,7 +41,7 @@ foreach ( $_list as $g => $bm ) {
 		'_token' => get_token($archiveAction),
 	)) . '">A</a></div>';
 	echo '<div class="link">';
-	echo '  <a href="' . html($bm->url) . '">' . html($bm->title ?: $bm->url) . '</a>';
+	echo '  <a href="' . html($bm->url) . '" rel="noreferrer">' . html($bm->title ?: $bm->url) . '</a>';
 	echo '  <div class="favorite"><a class="ajax" href="' . get_url('index', array(
 		'favorite' => $id,
 		'value' => (int)!$bm->favorite,

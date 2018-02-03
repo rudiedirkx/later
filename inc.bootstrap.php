@@ -1,14 +1,12 @@
 <?php
 
 require 'env.php';
-require 'inc.functions.php';
+require 'vendor/autoload.php';
 
 header('Content-type: text/html; charset=utf-8');
 
 ini_set('session.cookie_lifetime', 99999999);
 session_start();
-
-require WHERE_DB_GENERIC_AT . '/db_sqlite.php';
 
 // db connection
 $db = db_sqlite::open(array('database' => __DIR__ . '/db/later.sqlite3'));

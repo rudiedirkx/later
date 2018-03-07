@@ -140,9 +140,7 @@ function do_save( $url, $title, $id = null, $group = '' ) {
 			return $db->update('urls', $save, array('id' => $id));
 		}
 		catch (db_exception $ex) {
-			echo $ex->query . "\n\n";
-			echo $ex->getMessage() . "\n";
-			exit;
+			return false;
 		}
 	}
 

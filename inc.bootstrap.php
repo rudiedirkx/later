@@ -1,7 +1,9 @@
 <?php
 
-require 'env.php';
+use rdx\later\ExactMatch;
+
 require 'vendor/autoload.php';
+require 'env.php';
 
 header('Content-type: text/html; charset=utf-8');
 
@@ -14,8 +16,7 @@ if ( !$db ) {
 	exit('No database connecto...');
 }
 
-$schema = require 'inc.db-schema.php';
-require 'inc.ensure-db-schema.php';
+$db->ensureSchema(require 'inc.db-schema.php');
 
 define('SESSION_NAME', 'later');
 define('DT', 'd M H:i');
@@ -25,3 +26,5 @@ $fgcContext = stream_context_create(array(
 		'user_agent' => 'Later 1.0',
 	),
 ));
+
+$bookmarkMatchers = $g_matchers ?? [new ExactMatch()];

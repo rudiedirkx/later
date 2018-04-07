@@ -146,8 +146,15 @@ function do_save( $url, $title, $id = null, $group = '' ) {
 
 	$save += array('o' => time());
 
-	// Exists, so reorder and unarchive
-	if ( $id = $db->select_one('urls', 'id', array('url' => $url, 'user_id' => $user->id)) ) {
+	// Find existing bookmark
+	$id = null;
+	foreach ($GLOBALS['bookmarkMatchers'] as $matcher) {
+		if ( $id = $matcher->findBookmarkId($save) ) {
+			break;
+		}
+	}
+
+	if ( $id ) {
 		return $db->update('urls', $save + array('archive' => 0), array('id' => $id));
 	}
 

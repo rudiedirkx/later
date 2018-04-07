@@ -2,9 +2,12 @@
     "name": "rdx/later",
     "type": "project",
     "require": {
-        "rdx/db": "^1.4"
+        "rdx/db": "^1.5"
     },
     "autoload": {
+        "psr-4": {
+            "rdx\\later\\": "src/"
+        },
         "files": [
             "inc.functions.php"
         ]

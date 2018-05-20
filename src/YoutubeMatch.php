@@ -15,6 +15,26 @@ class YoutubeMatch implements BookmarkMatcher {
 				}
 			}
 		}
+
+		if ( $list = $this->getPlaylistId($data['url']) ) {
+			$bookmarks = $db->select_fields('urls', 'id, url', "user_id = ? AND url LIKE ?", [$user->id, "%$list%"]);
+			foreach ($bookmarks as $id => $url) {
+				if ( $this->getPlaylistId($url) === $list ) {
+					return $id;
+				}
+			}
+		}
+	}
+
+	protected function getPlaylistId( $url ) {
+		$regexes = [
+			'#//(?:www\.)?youtube.com/watch.*?[\?\&]list=([^&\#]+)#',
+		];
+		foreach ( $regexes as $regex ) {
+			if ( preg_match($regex, $url, $match) ) {
+				return $match[1];
+			}
+		}
 	}
 
 	protected function getVideoId( $url ) {

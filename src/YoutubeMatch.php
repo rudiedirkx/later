@@ -8,7 +8,7 @@ class YoutubeMatch implements BookmarkMatcher {
 		global $db, $user;
 
 		if ( $vid = $this->getVideoId($data['url']) ) {
-			$bookmarks = $db->select_fields('urls', 'id, url', "user_id = ? AND url LIKE ?", [$user->id, "%$vid%"]);
+			$bookmarks = $db->select_fields('urls', 'id, url', "user_id = ? AND url LIKE ? ORDER BY archive", [$user->id, "%$vid%"]);
 			foreach ($bookmarks as $id => $url) {
 				if ( $this->getVideoId($url) === $vid ) {
 					return $id;
@@ -17,7 +17,7 @@ class YoutubeMatch implements BookmarkMatcher {
 		}
 
 		if ( $list = $this->getPlaylistId($data['url']) ) {
-			$bookmarks = $db->select_fields('urls', 'id, url', "user_id = ? AND url LIKE ?", [$user->id, "%$list%"]);
+			$bookmarks = $db->select_fields('urls', 'id, url', "user_id = ? AND url LIKE ? ORDER BY archive", [$user->id, "%$list%"]);
 			foreach ($bookmarks as $id => $url) {
 				if ( $this->getPlaylistId($url) === $list ) {
 					return $id;

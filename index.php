@@ -74,6 +74,7 @@ $bookmarks = $db->fetch("
 		" . $filter . "
 		" . $groupFilter . "
 	ORDER BY
+		u.favorite DESC,
 		IF(u.`group` = '' OR u.`group` IS NULL, u.o, (SELECT MAX(o) FROM urls WHERE `group` = u.`group` AND archive = '0')) DESC,
 		u.o DESC
 	LIMIT " . $limit . "

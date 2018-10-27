@@ -27,4 +27,10 @@ $fgcContext = stream_context_create(array(
 	),
 ));
 
-$bookmarkMatchers = $g_matchers ?? [new ExactMatch()];
+$_initClass = function($config) {
+	$params = (array) $config;
+	$class = array_shift($params);
+	return new $class(...$params);
+};
+$g_bookmarkMatchers = array_map($_initClass, LATER_BOOKMARK_MATCHERS ?: [ExactMatch::class]);
+$g_bookmarkPreprocessors = array_map($_initClass, LATER_BOOKMARK_PREPROCESSORS);

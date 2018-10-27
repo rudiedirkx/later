@@ -136,6 +136,10 @@ function do_save( $url, $title, $id = null, $group = '' ) {
 
 	// Given id, only update, no extra logic, like order or archive
 	if ( $id ) {
+		foreach ($GLOBALS['g_bookmarkPreprocessors'] as $preprocessor) {
+			$preprocessor->beforeSave($save);
+		}
+
 		try {
 			return $db->update('urls', $save, array('id' => $id));
 		}
@@ -146,12 +150,20 @@ function do_save( $url, $title, $id = null, $group = '' ) {
 
 	$save += array('o' => time());
 
+	foreach ($GLOBALS['g_bookmarkPreprocessors'] as $preprocessor) {
+		$preprocessor->beforeMatch($save);
+	}
+
 	// Find existing bookmark
 	$id = null;
-	foreach ($GLOBALS['bookmarkMatchers'] as $matcher) {
+	foreach ($GLOBALS['g_bookmarkMatchers'] as $matcher) {
 		if ( $id = $matcher->findBookmarkId($save) ) {
 			break;
 		}
+	}
+
+	foreach ($GLOBALS['g_bookmarkPreprocessors'] as $preprocessor) {
+		$preprocessor->beforeSave($save);
 	}
 
 	if ( $id ) {
@@ -159,7 +171,7 @@ function do_save( $url, $title, $id = null, $group = '' ) {
 	}
 
 	// New, so insert
-	return $db->insert('urls', array('url' => $url, 'created' => time(), 'user_id' => $user->id) + $save);
+	return $db->insert('urls', array('created' => time(), 'user_id' => $user->id) + $save);
 }
 
 /**

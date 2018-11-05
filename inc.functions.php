@@ -131,8 +131,8 @@ function do_save( $url, $title, $id = null, $group = '' ) {
 	$save = array(
 		'title' => $title,
 		'url' => $url,
-		'group' => $group ?: '',
 	);
+	$group and $save['group'] = $group;
 
 	// Given id, only update, no extra logic, like order or archive
 	if ( $id ) {

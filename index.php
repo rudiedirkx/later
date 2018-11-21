@@ -84,12 +84,12 @@ $bookmarks = $bookmarks->all();
 
 $groups = do_groups($bookmarks);
 
-$groupTotals = $db->select_fields('urls', '"group", COUNT(1)', 'archive = ? AND "group" <> ? GROUP BY "group"', array(0, ''));
+$groupTotals = $db->select_fields('urls', '"group", COUNT(1)', 'user_id = ? AND archive = ? AND "group" <> ? GROUP BY "group"', array($user->id, 0, ''));
 
 $total = $db->count('urls', 'user_id = ? AND archive = ?' . $filter . $groupFilter, array($user->id, 0));
 $realTotal = $filter || $groupFilter ? $db->count('urls', 'user_id = ? AND archive = ?', array($user->id, 0)) : 0;
 
-$groupOptions = $db->select_fields('urls', '"group", "group"', 'archive = ? AND "group" <> ? GROUP BY "group"', array(0, ''));
+$groupOptions = $db->select_fields('urls', '"group", "group"', 'user_id = ? AND archive = ? AND "group" <> ? GROUP BY "group"', array($user->id, 0, ''));
 
 require 'tpl.header.php';
 

@@ -29,3 +29,5 @@ echo '</h3>';
 
 $inner = false;
 require 'tpl.bookmarks.php';
+
+require 'tpl.footer.php';

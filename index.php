@@ -119,3 +119,7 @@ $bookmarklet = preg_replace('#[\r\n\t]#', '', str_replace('__BASE__', $base, fil
 	or
 	<a href onclick="prompt('Copy this:', '<?= addslashes($bookmarklet) ?>'); return false">click to copy</a>
 </p>
+
+<?php
+
+require 'tpl.footer.php';

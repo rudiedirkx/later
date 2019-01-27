@@ -1,0 +1,11 @@
+{
+	"name": "Later",
+	"short_name": "Later",
+	"share_target": {
+		"action": "/bookmarklet.php",
+		"params": {
+			"url": "url",
+			"title": "title"
+		}
+	}
+}

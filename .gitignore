@@ -3,3 +3,4 @@ env.php
 .readability-cache
 
 /vendor/
+/node_modules/

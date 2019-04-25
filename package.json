@@ -1,0 +1,11 @@
+{
+  "name": "later",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:rudiedirkx/later.git",
+  "author": "Rudie Dirkx <github@hotblocks.nl>",
+  "license": "MIT",
+  "dependencies": {
+    "@postlight/mercury-parser": "^2.1.0"
+  }
+}

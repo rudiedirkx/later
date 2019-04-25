@@ -3,6 +3,8 @@
 	"short_name": "Later",
 	"share_target": {
 		"action": "/bookmarklet.php",
+		"method": "get",
+		"enctype": "application/x-www-form-urlencoded",
 		"params": {
 			"url": "url",
 			"title": "title"

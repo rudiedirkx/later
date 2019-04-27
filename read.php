@@ -15,8 +15,8 @@ require 'tpl.header.php';
 
 ?>
 <style>
-br {
-	margin: 1em 0;
+.bookmark.active {
+	background-color: #eee;
 }
 </style>
 
@@ -36,15 +36,47 @@ const $title = document.querySelector('#title');
 const $content = document.querySelector('#content');
 const $debug = document.querySelector('#debug');
 
+function activateBookmark(bookmark) {
+	document.querySelectorAll('.bookmark.active').forEach(el => el.classList.remove('active'));
+	bookmark.classList.add('active');
+	bookmark.scrollIntoViewIfNeeded();
+}
+
+function findAndActivateBookmark(intro) {
+	document.querySelectorAll('.bookmark').forEach(el => {
+		if (el.textContent == intro) {
+			activateBookmark(el);
+		}
+	});
+}
+
+$content.addEventListener('click', function(e) {
+	var bookmark = e.target.closest('a.bookmark');
+	if (bookmark) {
+		e.preventDefault();
+		localStorage.readingParagraph = bookmark.textContent;
+		activateBookmark(bookmark);
+	}
+});
+
 Mercury.parse(location.href.replace(/read\.php/, 'source.php'), {contentType: 'text'}).then(rsp => {
 	console.log(rsp);
 
 	$title.textContent = rsp.title;
 
 	var text = rsp.content;
-	text = text.replace(/([\.\?]["”“]?)(\w)/g, '$1\n$2');
+	text = text.replace(/([\.\?]["”“)]?)([A-Z])/g, '$1\n$2');
 	$content.innerText = text;
 	$content.innerHTML = '<p>' + $content.innerHTML.replace(/<br>/g, '<p>');
+
+	[].forEach.call($content.children, p => {
+		var intro = p.textContent.substr(0, 20);
+		if (intro.length == 20 && p.innerHTML.substr(0, 20) === intro) {
+			p.innerHTML = `<a href class="bookmark">${intro}</a>${p.innerHTML.substr(20)}`;
+		}
+	});
+
+	setTimeout("findAndActivateBookmark(localStorage.readingParagraph)");
 
 	delete rsp.content;
 	$debug.textContent = JSON.stringify(rsp, null, '  ');

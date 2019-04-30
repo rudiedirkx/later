@@ -60,7 +60,7 @@ $content.addEventListener('click', function(e) {
 });
 
 Mercury.parse(location.href.replace(/read\.php/, 'source.php'), {contentType: 'text'}).then(rsp => {
-	console.log(rsp);
+	console.log('Mercury rsp', rsp);
 
 	$title.textContent = rsp.title;
 
@@ -70,9 +70,14 @@ Mercury.parse(location.href.replace(/read\.php/, 'source.php'), {contentType: 't
 	$content.innerHTML = '<p>' + $content.innerHTML.replace(/<br>/g, '<p>');
 
 	[].forEach.call($content.children, p => {
-		var intro = p.textContent.substr(0, 20);
-		if (intro.length == 20 && p.innerHTML.substr(0, 20) === intro) {
-			p.innerHTML = `<a href class="bookmark">${intro}</a>${p.innerHTML.substr(20)}`;
+		if (p.textContent.length >= 20 && p.innerHTML.substr(0, 20) === p.textContent.substr(0, 20)) {
+			const m = p.textContent.match(/^(.{20,}?) (.+)$/);
+			if (m) {
+				p.innerHTML = `<a href class="bookmark">${m[1]}</a>${p.innerHTML.substr(m[1].length)}`;
+			}
+			else {
+				console.warn('unbookmarkable', p);
+			}
 		}
 	});
 

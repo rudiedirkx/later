@@ -29,8 +29,7 @@ require 'tpl.header.php';
 	<pre id="debug"></pre>
 </details>
 
-<!-- <script src="node_modules/@postlight/mercury-parser/dist/mercury.web.js"></script> -->
-<script src="https://unpkg.com/@postlight/mercury-parser@2.1.0/dist/mercury.web.js"></script>
+<script src="https://unpkg.com/@postlight/mercury-parser@2.2.0/dist/mercury.web.js"></script>
 <script>
 const $title = document.querySelector('#title');
 const $content = document.querySelector('#content');

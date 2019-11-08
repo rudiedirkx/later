@@ -7,7 +7,7 @@ require 'env.php';
 
 header('Content-type: text/html; charset=utf-8');
 
-ini_set('session.cookie_lifetime', 99999999);
+session_set_cookie_params(['httponly' => true, 'secure' => true, 'lifetime' => 99999999, 'samesite' => 'None']);
 session_start();
 
 // db connection

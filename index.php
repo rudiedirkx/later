@@ -115,9 +115,9 @@ $bookmarklet = preg_replace('#[\r\n\t]#', '', str_replace('__BASE__', $base, fil
 ?>
 
 <p>
-	<a href="<?= $bookmarklet ?>">Drag this to your bookmarks</a>
+	<a href="<?= html($bookmarklet) ?>">Drag this to your bookmarks</a>
 	or
-	<a href onclick="prompt('Copy this:', '<?= addslashes($bookmarklet) ?>'); return false">click to copy</a>
+	<a href onclick="prompt('Copy this:', '<?= html(addslashes($bookmarklet)) ?>'); return false">click to copy</a>
 </p>
 
 <?php

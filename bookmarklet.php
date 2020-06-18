@@ -46,7 +46,13 @@ else {
 
 	var div = document.createElement('div');
 	div.className = 'later-loaded';
+
+
+
 	div.textContent = '<?= addslashes($text) ?>';
+
+
+
 	div.setAttribute('style', 'z-index: 2000999999; position: fixed; left: 20px; top: 50px; border: solid 20px <?= $color ?>; padding: 30px 20px; background: white; color: black; font-size: 30px; cursor: pointer; transition: opacity 500ms linear');
 	div.onclick = function(e) {
 		this.parentNode.removeChild(this);

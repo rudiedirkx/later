@@ -62,8 +62,9 @@ $filter = $filter ? $db->replaceholders(' AND (url LIKE ? OR title LIKE ?)', arr
 $groupFilter = trim(@$_GET['group_filter']);
 $groupFilter = $groupFilter ? $db->replaceholders(' AND `group` = ?', array($groupFilter)) : '';
 
+$limit = LATER_LIMIT;
 $page = (int)@$_GET['page'];
-$offset = $page * LATER_LIMIT;
+$offset = $page * $limit;
 $bookmarks = $db->fetch("
 	SELECT *
 	FROM urls u
@@ -76,7 +77,7 @@ $bookmarks = $db->fetch("
 		u.favorite DESC,
 		IF(u.`group` = '' OR u.`group` IS NULL, u.o, (SELECT MAX(o) FROM urls WHERE `group` = u.`group` AND archive = '0')) DESC,
 		u.o DESC
-	LIMIT " . LATER_LIMIT . "
+	LIMIT " . $limit . "
 	OFFSET " . $offset . "
 ", array($user->id));
 $bookmarks = $bookmarks->all();

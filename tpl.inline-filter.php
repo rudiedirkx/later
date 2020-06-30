@@ -1,3 +1,11 @@
+<? if (count(LATER_DATALIST_OPTIONS)): ?>
+	<datalist id="sdl">
+		<? foreach (LATER_DATALIST_OPTIONS as $opt): ?>
+			<option value="<?= html($opt) ?>">
+		<? endforeach ?>
+	</datalist>
+<? endif ?>
+
 <form class="inline-filter">
 	<input
 		name="url_filter"
@@ -14,6 +22,9 @@
 			this
 		)"
 		onblur="this.classList.remove('focus')"
+		<? if (count(LATER_DATALIST_OPTIONS)): ?>
+			list="sdl"
+		<? endif ?>
 	/>
 	<input type="submit" class="submit" />
 </form>

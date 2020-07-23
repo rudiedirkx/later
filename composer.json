@@ -2,7 +2,9 @@
     "name": "rdx/later",
     "type": "project",
     "require": {
-        "rdx/db": "^1.5"
+        "rdx/db": "^1.5",
+        "guzzlehttp/guzzle": "^7.0",
+        "rdx/js-dom": "^1.1"
     },
     "autoload": {
         "psr-4": {

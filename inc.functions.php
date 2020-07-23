@@ -1,5 +1,10 @@
 <?php
 
+use GuzzleHttp\Client as Guzzle;
+use GuzzleHttp\Cookie\CookieJar;
+use rdx\jsdom\Node;
+// use GuzzleHttp\RedirectMiddleware;
+
 /**
  *
  */
@@ -104,6 +109,22 @@ function get_valid_url( $url, &$_url = null ) {
 /**
  *
  */
+function get_html( $url ) {
+	$cookies = new CookieJar();
+	$guzzle = new Guzzle([
+		'cookies' => $cookies,
+		'headers' => ['User-agent' => 'WhatsApp/2.20.108 A'],
+		// 'allow_redirects' => [
+		// 	'track_redirects' => true,
+		// ] + RedirectMiddleware::$defaultSettings,
+	]);
+	$rsp = $guzzle->get($url);
+	return (string) $rsp->getBody();
+}
+
+/**
+ *
+ */
 function do_save( $url, $title, $id = null, $group = '' ) {
 	global $db, $user, $fgcContext;
 
@@ -112,9 +133,13 @@ function do_save( $url, $title, $id = null, $group = '' ) {
 	}
 
 	if ( !$title ) {
-		$html = @file_get_contents($url, false, $fgcContext);
-		if ( $html && @preg_match('#<title.*?>([^<]+)</title>#i', $html, $match) ) {
-			$title = $match[1];
+		$html = get_html($url);
+		$dom = Node::create($html);
+
+		$el = $dom->query('title');
+		if ( $el ) {
+			$title = $el->textContent;
+
 			$title = strtr($title, array(
 				'&trade;' => '™',
 				'&rsquo;' => '’',

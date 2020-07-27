@@ -5,7 +5,7 @@ $_list = @$groups ?: $bookmarks;
 echo '<ol class="bookmarks ' . ($inner ? 'inner' : 'outer') . '">';
 foreach ( $_list as $g => $bm ) {
 	if ( is_array($bm) ) {
-		$hidden = in_array($g, $user->hide_groups) ? 'hidden' : '';
+		$hidden = !$filter && in_array($g, $user->hide_groups) ? 'hidden' : '';
 		echo '<li class="multiple ' . $hidden . '" data-group="' . html($g) . '">';
 		$groupTotal = isset($groupTotals[$g]) ? ' (' . (count($bm) < $groupTotals[$g] ? count($bm) . ' / ' : '') . $groupTotals[$g] . ')' : '';
 		$filter = '<a class="filter" href="?group_filter=' . urlencode($g) . '">filter</a>';

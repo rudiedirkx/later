@@ -35,7 +35,7 @@ foreach ( $_list as $g => $bm ) {
 
 	$archiveAction = $bm->archive ? 'unarchive' : 'archive';
 
-	echo '<li data-id="' . $bm->id . '" class="' . implode(' ', $classes) . '">';
+	echo '<li data-id="' . $bm->id . '" data-selected-group="' . $bm->group . '" class="' . implode(' ', $classes) . '">';
 	echo '<div class="' . $archiveAction . '"><a class="ajax" href="' . get_url('index', array(
 		$archiveAction => $id,
 		'_token' => get_token($archiveAction),

@@ -94,8 +94,7 @@ $groupOptions = $db->select_fields('urls', '"group", "group"', 'user_id = ? AND 
 require 'tpl.header.php';
 
 echo '<h3>';
-echo count($bookmarks) . ' / ';
-echo $total;
+echo count($bookmarks) . ' / ' . $total;
 echo $realTotal ? ' (' . $realTotal . ')' : '';
 echo ' unread <a href="form.php">+</a> / ';
 echo '<a href="archive.php">...</a> / ';
@@ -104,6 +103,20 @@ echo '</h3>';
 
 $inner = false;
 require 'tpl.bookmarks.php';
+
+?>
+<script>
+window.addEventListener('load', function(e) {
+	[].some.call(document.querySelectorAll('.change-group > select'), function(el) {
+		const li = el.closest('li[data-selected-group]');
+		if (el.value != li.dataset.selectedGroup) {
+			location.reload();
+			return true;
+		}
+	});
+});
+</script>
+<?php
 
 $https = !empty($_SERVER['HTTPS']) && strtolower($_SERVER['HTTPS']) != 'off';
 $protocol = $https ? 'https' : 'http';

@@ -106,7 +106,7 @@ require 'tpl.bookmarks.php';
 
 ?>
 <script>
-window.addEventListener('load', function(e) {
+function checkFormState() {
 	[].some.call(document.querySelectorAll('.change-group > select'), function(el) {
 		const li = el.closest('li[data-selected-group]');
 		if (el.value != li.dataset.selectedGroup) {
@@ -114,6 +114,9 @@ window.addEventListener('load', function(e) {
 			return true;
 		}
 	});
+}
+window.addEventListener('load', function(e) {
+	setInterval(checkFormState, 100);
 });
 </script>
 <?php

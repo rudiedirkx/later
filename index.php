@@ -106,8 +106,8 @@ require 'tpl.bookmarks.php';
 
 ?>
 <script>
-function checkFormState() {
-	[].some.call(document.querySelectorAll('.change-group > select'), function(el) {
+function corruptFormState() {
+	return [].some.call(document.querySelectorAll('.change-group > select'), function(el) {
 		const li = el.closest('li[data-selected-group]');
 		if (el.value != li.dataset.selectedGroup) {
 			return true;
@@ -116,11 +116,11 @@ function checkFormState() {
 }
 window.addEventListener('load', function(e) {
 	var timer = setInterval(function() {
-		if (checkFormState()) {
+		if (corruptFormState()) {
 			clearInterval(timer);
 			location.reload();
 		}
-	}, 100);
+	}, 300);
 });
 </script>
 <?php

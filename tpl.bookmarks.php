@@ -59,7 +59,7 @@ foreach ( $_list as $g => $bm ) {
 		echo '<div class="host">' . $host . '</div>';
 	}
 	if ( @$groupOptions ) {
-		echo '<div class="change-group"><select><option value>-</option>' . html_options($groupOptions, $bm->group) . '</select></div>';
+		echo '<div class="change-group"><select name="group_' . $id . '"><option value>-</option>' . html_options($groupOptions, $bm->group) . '</select></div>';
 	}
 	echo '<div class="edit"><a href="' . get_url('form', array('id' => $id)) . '">E</a></div>';
 	if ( !$bm->archive ) {

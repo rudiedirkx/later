@@ -13,18 +13,35 @@
 		value="<?= html(@$_GET['url_filter']) ?>"
 		class="search"
 		autocomplete="off"
-		onfocus="setTimeout(
-			function(el) {
-				el.classList.add('focus');
-				el.select();
-			},
-			'ontouchstart' in document ? 200 : 0,
-			this
-		)"
-		onblur="this.classList.remove('focus')"
 		<? if (count(LATER_DATALIST_OPTIONS)): ?>
 			list="sdl"
 		<? endif ?>
 	/>
 	<input type="submit" class="submit" />
 </form>
+
+<script>
+(function(el) {
+	// Datalist selection
+	var timer;
+	el.addEventListener('change', function(e) {
+		timer = setTimeout(function() {
+			el.form.submit();
+		}, 1);
+	});
+	el.addEventListener('blur', function(e) {
+		clearTimeout(timer);
+	});
+
+	// Filter size/display
+	el.addEventListener('focus', function(e) {
+		setTimeout(function() {
+			el.classList.add('focus');
+			el.select();
+		}, 50);
+	});
+	el.addEventListener('blur', function(e) {
+		el.classList.remove('focus');
+	});
+})(document.querySelector('input[name="url_filter"]'));
+</script>

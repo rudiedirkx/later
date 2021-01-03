@@ -8,13 +8,13 @@ foreach ( $_list as $g => $bm ) {
 		$hidden = !$filter && in_array($g, $user->hide_groups) ? 'hidden' : '';
 		echo '<li class="multiple ' . $hidden . '" data-group="' . html($g) . '">';
 		$groupTotal = isset($groupTotals[$g]) ? ' (' . (count($bm) < $groupTotals[$g] ? count($bm) . ' / ' : '') . $groupTotals[$g] . ')' : '';
-		$filter = '<a class="filter" href="?group_filter=' . urlencode($g) . '">filter</a>';
+		$filterLink = '<a class="filter" href="?group_filter=' . urlencode($g) . '">filter</a>';
 		$name = '<a href="' . get_url('index', array(
 			'group' => $g,
 			'hidden' => '__HIDDEN__',
 			'_token' => get_token('toggleGroup'),
 		)) . '" class="group-name">' . $g . '</a>';
-		echo '<div class="group-header">' . $name . $groupTotal . ' (' . $filter . ')</div>';
+		echo '<div class="group-header">' . $name . $groupTotal . ' (' . $filterLink . ')</div>';
 
 		$inner = true;
 		$groups = $bm;

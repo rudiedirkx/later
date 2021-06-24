@@ -39,7 +39,7 @@ class YoutubeMatch implements BookmarkMatcher {
 
 	protected function getVideoId( $url ) {
 		$regexes = [
-			'#//(?:www\.)?youtube.com/watch.*?[\?\&]v=([^&\#]+)#',
+			'#//(?:www\.|m\.)?youtube.com/watch.*?[\?\&]v=([^&\#]+)#',
 			'#//(?:www\.)?youtu\.be/([^&\#\?]+)#',
 		];
 		foreach ( $regexes as $regex ) {

@@ -209,8 +209,9 @@ h3 .sub {
 	overflow: hidden;
 	padding: 0 4px;
 	word-break: normal;
-    -webkit-appearance: none;
-    text-align: center;
+	-webkit-appearance: none;
+	text-align: left;
+	text-align-last: center;
 }
 .bookmarks .edit a {
 	background-color: blue;

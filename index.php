@@ -57,39 +57,33 @@ else if ( isset($_GET['group'], $_GET['hidden']) ) {
 }
 
 $filter = trim(@$_GET['url_filter']);
-$filter = $filter ? $db->replaceholders(' AND (url LIKE ? OR title LIKE ?)', array('%' . $filter . '%', '%' . $filter . '%')) : '';
+$filter = $filter ? $db->replaceholders('AND (u.url LIKE ? OR u.title LIKE ?)', ["%$filter%", "%$filter%"]) : '';
 
 $groupFilter = trim(@$_GET['group_filter']);
-$groupFilter = $groupFilter ? $db->replaceholders(' AND `group` = ?', array($groupFilter)) : '';
+$groupFilter = $groupFilter ? $db->replaceholders('AND u.`group` = ?', [$groupFilter]) : '';
 
 $limit = LATER_LIMIT;
 $page = (int)@$_GET['page'];
 $offset = $page * $limit;
 $bookmarks = $db->fetch("
-	SELECT *
-	FROM urls u
-	WHERE
-		u.user_id = ? AND
-		u.archive = '0'
-		" . $filter . "
-		" . $groupFilter . "
-	ORDER BY
-		u.favorite DESC,
-		IF(u.`group` = '' OR u.`group` IS NULL, u.o, (SELECT MAX(o) FROM urls WHERE `group` = u.`group` AND archive = '0')) DESC,
-		u.o DESC
-	LIMIT " . $limit . "
-	OFFSET " . $offset . "
+	SELECT u.*, COALESCE(MAX(o.o), u.o) use_o
+	FROM urls AS u
+	LEFT JOIN urls o ON o.`group` = u.`group` AND o.archive = '0'
+	WHERE u.user_id = ? AND u.archive = '0' $filter $groupFilter
+	GROUP BY u.id
+	ORDER BY u.favorite DESC, use_o DESC, u.o DESC
+	LIMIT $limit OFFSET $offset
 ", array($user->id));
 $bookmarks = $bookmarks->all();
 
 $groups = do_groups($bookmarks);
 
-$groupTotals = $db->select_fields('urls', '"group", COUNT(1)', 'user_id = ? AND archive = ? AND "group" <> ? GROUP BY "group"', array($user->id, 0, ''));
+$groupTotals = $db->select_fields('urls', '`group`, COUNT(1)', "user_id = ? AND archive = '0' AND `group` is not null GROUP BY `group` ORDER BY `group` ASC", [$user->id]);
 
-$total = $db->count('urls', 'user_id = ? AND archive = ?' . $filter . $groupFilter, array($user->id, 0));
-$realTotal = $filter || $groupFilter ? $db->count('urls', 'user_id = ? AND archive = ?', array($user->id, 0)) : 0;
+$total = $db->count('urls AS u', "u.user_id = ? AND u.archive = '0' $filter $groupFilter", [$user->id]);
+$realTotal = $filter || $groupFilter ? $db->count('urls', "user_id = ? AND archive = '0'", [$user->id]) : 0;
 
-$groupOptions = $db->select_fields('urls', '"group", "group"', 'user_id = ? AND archive = ? AND "group" <> ? GROUP BY "group"', array($user->id, 0, ''));
+$groupOptions = array_combine(array_keys($groupTotals), array_keys($groupTotals));
 
 require 'tpl.header.php';
 

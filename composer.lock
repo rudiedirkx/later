@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "616547ac581f966dc889fa6582b3b85d",
+    "content-hash": "a2a999aa804623577c1b27205e8e099f",
     "packages": [
         {
             "name": "guzzlehttp/guzzle",
@@ -535,20 +535,24 @@
         },
         {
             "name": "rdx/db",
-            "version": "1.20",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/rudiedirkx/db_generic.git",
-                "reference": "1aa7f35859821879490082ac2ea06e7d11c29374"
+                "reference": "1606996c1f268aaa339859da6606aa6dd58c4d27"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/rudiedirkx/db_generic/zipball/1aa7f35859821879490082ac2ea06e7d11c29374",
-                "reference": "1aa7f35859821879490082ac2ea06e7d11c29374",
+                "url": "https://api.github.com/repos/rudiedirkx/db_generic/zipball/1606996c1f268aaa339859da6606aa6dd58c4d27",
+                "reference": "1606996c1f268aaa339859da6606aa6dd58c4d27",
                 "shasum": ""
             },
+            "default-branch": true,
             "type": "library",
             "autoload": {
+                "exclude-from-classmap": [
+                    "/test/"
+                ],
                 "classmap": [
                     "./"
                 ]
@@ -566,9 +570,9 @@
             "description": "Simple MySQL/SQLite wrapper",
             "support": {
                 "issues": "https://github.com/rudiedirkx/db_generic/issues",
-                "source": "https://github.com/rudiedirkx/db_generic/tree/1.20"
+                "source": "https://github.com/rudiedirkx/db_generic/tree/master"
             },
-            "time": "2021-02-10T23:13:36+00:00"
+            "time": "2021-11-20T18:58:42+00:00"
         },
         {
             "name": "rdx/js-dom",
@@ -746,7 +750,9 @@
     "packages-dev": [],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {
+        "rdx/db": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": [],

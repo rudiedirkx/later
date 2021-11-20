@@ -28,7 +28,7 @@ else if ( isset($_GET['favorite'], $_GET['value']) ) {
 else if ( isset($_GET['group'], $_GET['id']) ) {
 	do_tokencheck('group');
 
-	$db->update('urls', array('group' => $_GET['group'] ?: ''), array('user_id' => $user->id, 'id' => $_GET['id'], 'archive' => 0));
+	$db->update('urls', array('group' => trim($_GET['group']) ?: null), array('user_id' => $user->id, 'id' => $_GET['id'], 'archive' => 0));
 	exit('OK');
 }
 

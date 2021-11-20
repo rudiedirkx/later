@@ -12,7 +12,7 @@ if ( isset($_POST['url'], $_POST['title'], $_POST['group']) ) {
 
 	$url = trim($_POST['url']);
 	$title = trim($_POST['title']);
-	$group = trim($_POST['group']);
+	$group = trim($_POST['group']) ?: null;
 
 	// Make it start with http:// if no scheme was provided
 	if ( !preg_match('#^\w+://#', $url) ) {

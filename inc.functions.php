@@ -125,7 +125,7 @@ function get_html( $url ) {
 /**
  *
  */
-function do_save( $url, $title, $id = null, $group = '' ) {
+function do_save( $url, $title, $id = null, $group = null ) {
 	global $db, $user, $fgcContext;
 
 	if ( !get_valid_url($url) ) {
@@ -157,7 +157,9 @@ function do_save( $url, $title, $id = null, $group = '' ) {
 		'title' => $title,
 		'url' => $url,
 	);
-	$group and $save['group'] = $group;
+	if (func_num_args() >= 4 ) {
+		$save['group'] = $group;
+	}
 
 	// Given id, only update, no extra logic, like order or archive
 	if ( $id ) {

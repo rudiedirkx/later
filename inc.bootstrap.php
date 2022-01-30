@@ -6,6 +6,7 @@ require 'vendor/autoload.php';
 require 'env.php';
 
 header('Content-type: text/html; charset=utf-8');
+header('Cache-Control: no-store, no-cache, must-revalidate');
 
 session_set_cookie_params(['httponly' => true, 'secure' => true, 'lifetime' => 99999999, 'samesite' => 'None']);
 session_start();

@@ -134,7 +134,7 @@ function do_save( $url, $title, $id = null, $group = null ) {
 
 	if ( !$title ) {
 		$html = get_html($url);
-		$dom = Node::create($html);
+		$dom = Node::create($html, 'utf-8');
 
 		$el = $dom->query('title');
 		if ( $el ) {

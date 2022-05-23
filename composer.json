@@ -4,7 +4,7 @@
     "require": {
         "rdx/db": "dev-master",
         "guzzlehttp/guzzle": "^7.0",
-        "rdx/js-dom": "^1.1"
+        "rdx/js-dom": "^1.4"
     },
     "autoload": {
         "psr-4": {

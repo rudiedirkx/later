@@ -4,11 +4,11 @@ namespace rdx\later;
 
 class PreprocessWhitespace implements BookmarkPreprocessor {
 
-	public function beforeMatch( array &$data ) {
+	public function beforeMatch( array &$data, ?string $html = null ) {
 		$this->preprocess($data);
 	}
 
-	public function beforeSave( array &$data ) {
+	public function beforeSave( array &$data, ?string $html = null ) {
 		$this->preprocess($data);
 	}
 

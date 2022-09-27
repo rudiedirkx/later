@@ -132,6 +132,7 @@ function do_save( $url, $title, $id = null, $group = null ) {
 		return false;
 	}
 
+	$html = null;
 	if ( !$title ) {
 		$html = get_html($url);
 		$dom = Node::create($html, 'utf-8');
@@ -164,7 +165,7 @@ function do_save( $url, $title, $id = null, $group = null ) {
 	// Given id, only update, no extra logic, like order or archive
 	if ( $id ) {
 		foreach ($GLOBALS['g_bookmarkPreprocessors'] as $preprocessor) {
-			$preprocessor->beforeSave($save);
+			$preprocessor->beforeSave($save, $html);
 		}
 
 		try {
@@ -178,7 +179,7 @@ function do_save( $url, $title, $id = null, $group = null ) {
 	$save += array('o' => time());
 
 	foreach ($GLOBALS['g_bookmarkPreprocessors'] as $preprocessor) {
-		$preprocessor->beforeMatch($save);
+		$preprocessor->beforeMatch($save, $html);
 	}
 
 	// Find existing bookmark
@@ -190,7 +191,7 @@ function do_save( $url, $title, $id = null, $group = null ) {
 	}
 
 	foreach ($GLOBALS['g_bookmarkPreprocessors'] as $preprocessor) {
-		$preprocessor->beforeSave($save);
+		$preprocessor->beforeSave($save, $html);
 	}
 
 	if ( $id ) {

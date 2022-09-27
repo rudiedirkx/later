@@ -4,8 +4,8 @@ namespace rdx\later;
 
 interface BookmarkPreprocessor {
 
-	public function beforeMatch( array &$data );
+	public function beforeMatch( array &$data, ?string $html = null );
 
-	public function beforeSave( array &$data );
+	public function beforeSave( array &$data, ?string $html = null );
 
 }

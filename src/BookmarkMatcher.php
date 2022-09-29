@@ -4,9 +4,6 @@ namespace rdx\later;
 
 interface BookmarkMatcher {
 
-	/**
-	 * @return int
-	 */
-	public function findBookmarkId( array $data );
+	public function findBookmarkId( array $data ) : ?int;
 
 }

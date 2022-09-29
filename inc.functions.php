@@ -1,9 +1,6 @@
 <?php
 
-use GuzzleHttp\Client as Guzzle;
-use GuzzleHttp\Cookie\CookieJar;
-use rdx\jsdom\Node;
-// use GuzzleHttp\RedirectMiddleware;
+use rdx\later\PageSource;
 
 /**
  *
@@ -109,22 +106,6 @@ function get_valid_url( $url, &$_url = null ) {
 /**
  *
  */
-function get_html( $url ) {
-	$cookies = new CookieJar();
-	$guzzle = new Guzzle([
-		'cookies' => $cookies,
-		'headers' => ['User-agent' => 'WhatsApp/2.20.108 A'],
-		// 'allow_redirects' => [
-		// 	'track_redirects' => true,
-		// ] + RedirectMiddleware::$defaultSettings,
-	]);
-	$rsp = $guzzle->get($url);
-	return (string) $rsp->getBody();
-}
-
-/**
- *
- */
 function do_save( $url, $title, $id = null, $group = null ) {
 	global $db, $user, $fgcContext;
 
@@ -132,23 +113,22 @@ function do_save( $url, $title, $id = null, $group = null ) {
 		return false;
 	}
 
-	$html = null;
+	$source = new PageSource($url);
 	if ( !$title ) {
-		$html = get_html($url);
-		$dom = Node::create($html, 'utf-8');
+		$source->fetch();
 
-		$el = $dom->query('title');
+		$el = $source->dom->query('title');
 		if ( $el ) {
 			$title = $el->textContent;
 
-			$title = strtr($title, array(
-				'&trade;' => '™',
-				'&rsquo;' => '’',
-			));
-			$title = html_entity_decode($title);
-			$title = preg_replace_callback('/&#(\d+);/', function($match) {
-				return chr((int)$match[1]);
-			}, $title);
+			// $title = strtr($title, array(
+			// 	'&trade;' => '™',
+			// 	'&rsquo;' => '’',
+			// ));
+			// $title = html_entity_decode($title);
+			// $title = preg_replace_callback('/&#(\d+);/', function($match) {
+			// 	return chr((int)$match[1]);
+			// }, $title);
 		}
 	}
 
@@ -165,7 +145,7 @@ function do_save( $url, $title, $id = null, $group = null ) {
 	// Given id, only update, no extra logic, like order or archive
 	if ( $id ) {
 		foreach ($GLOBALS['g_bookmarkPreprocessors'] as $preprocessor) {
-			$preprocessor->beforeSave($save, $html);
+			$preprocessor->beforeSave($save, $source);
 		}
 
 		try {
@@ -179,7 +159,7 @@ function do_save( $url, $title, $id = null, $group = null ) {
 	$save += array('o' => time());
 
 	foreach ($GLOBALS['g_bookmarkPreprocessors'] as $preprocessor) {
-		$preprocessor->beforeMatch($save, $html);
+		$preprocessor->beforeMatch($save, $source);
 	}
 
 	// Find existing bookmark
@@ -191,7 +171,7 @@ function do_save( $url, $title, $id = null, $group = null ) {
 	}
 
 	foreach ($GLOBALS['g_bookmarkPreprocessors'] as $preprocessor) {
-		$preprocessor->beforeSave($save, $html);
+		$preprocessor->beforeSave($save, $source);
 	}
 
 	if ( $id ) {

@@ -6,7 +6,7 @@ class F95ThreadMatch implements BookmarkMatcher {
 
 	const F95_URL = 'https://f95zone.to/threads/{name}.{id}/';
 
-	public function findBookmarkId( array $data ) {
+	public function findBookmarkId( array $data ) : ?int {
 		global $db, $user;
 
 		if ( $f95Id = $this->getThreadId($data['url']) ) {
@@ -18,6 +18,8 @@ class F95ThreadMatch implements BookmarkMatcher {
 				}
 			}
 		}
+
+		return null;
 	}
 
 	protected function getThreadId( $url ) {

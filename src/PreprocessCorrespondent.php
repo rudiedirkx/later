@@ -6,33 +6,32 @@ use rdx\jsdom\Node;
 
 class PreprocessCorrespondent implements BookmarkPreprocessor {
 
-	public function beforeMatch( array &$data, ?string $html = null ) {
+	public function beforeMatch( array &$data, PageSource $source ) : void {
 	}
 
-	public function beforeSave( array &$data, ?string $html = null ) {
-		$this->preprocess($data);
+	public function beforeSave( array &$data, PageSource $source ) : void {
+		$this->preprocess($data, $source);
 	}
 
-	protected function preprocess( array &$data ) {
+	protected function preprocess( array &$data, PageSource $source ) : void {
 		$url = $data['url'];
 		if ( !preg_match('#\b(de|the)correspondent\.(nl|com)#', $url) ) {
 			return;
 		}
 
-		$pattern = '#- (De|The) Correspondent$#';
+		$pattern = '#- (De|The) Correspondent$#i';
 		if ( !preg_match($pattern, $data['title']) ) {
 			return;
 		}
 
-		$html = get_html($url);
-		$dom = Node::create($html);
+		$source->fetch();
 
-		$timeEl = $dom->query('.publication-metadata__readingtime');
+		$timeEl = $source->dom->query('.publication-metadata__readingtime');
 		if ( !$timeEl ) {
 			return;
 		}
 
-		$titleEl = $dom->query('title');
+		$titleEl = $source->dom->query('title');
 		$title = trim(preg_replace($pattern, '', $titleEl->textContent));
 
 		$time = trim($timeEl->textContent, ')(');

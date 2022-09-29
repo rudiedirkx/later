@@ -10,15 +10,15 @@ class PreprocessQuery implements BookmarkPreprocessor {
 		$this->remove = $remove;
 	}
 
-	public function beforeMatch( array &$data, ?string $html = null ) {
+	public function beforeMatch( array &$data, PageSource $source ) : void {
 		$this->preprocess($data);
 	}
 
-	public function beforeSave( array &$data, ?string $html = null ) {
+	public function beforeSave( array &$data, PageSource $source ) : void {
 		$this->preprocess($data);
 	}
 
-	protected function preprocess( array &$data ) {
+	protected function preprocess( array &$data ) : void {
 		$url = $data['url'];
 
 		$url = preg_replace('/([\?&#])(' . implode('|', $this->remove) . ')=[^&#]+/', '$1', $url);

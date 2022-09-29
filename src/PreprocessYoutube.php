@@ -6,15 +6,14 @@ use rdx\jsdom\Node;
 
 class PreprocessYoutube implements BookmarkPreprocessor {
 
-	public function beforeMatch( array &$data, ?string $html = null ) {
+	public function beforeMatch( array &$data, PageSource $source ) : void {
 	}
 
-	public function beforeSave( array &$data, ?string $html = null ) {
-// dd('beforeSave', $html);
-		$this->preprocess($data, $html);
+	public function beforeSave( array &$data, PageSource $source ) : void {
+		$this->preprocess($data, $source);
 	}
 
-	protected function preprocess( array &$data, ?string $html = null ) {
+	protected function preprocess( array &$data, PageSource $source ) : void {
 		$url = $data['url'];
 		if ( !preg_match('#\b(youtube\.com|youtu\.be)/#', $url) ) {
 			return;
@@ -25,10 +24,9 @@ class PreprocessYoutube implements BookmarkPreprocessor {
 			return;
 		}
 
-		$html or $html = get_html($url);
-		$dom = Node::create($html, 'utf-8');
+		$source->fetch();
 
-		$ytData = $this->getMetaData($dom);
+		$ytData = $this->getMetaData($source->dom);
 		if ( !$ytData ) return;
 
 		$title = trim($ytData['videoDetails']['title'] ?? '');

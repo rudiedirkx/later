@@ -4,10 +4,14 @@ namespace rdx\later;
 
 class ExactMatch implements BookmarkMatcher {
 
-	public function findBookmarkId( array $data ) {
+	public function findBookmarkId( array $data ) : ?int {
 		global $db, $user;
 
-		return $db->select_one('urls', 'id', ['user_id' => $user->id, 'url' => $data['url']]);
+		if ($id = $db->select_one('urls', 'id', ['user_id' => $user->id, 'url' => $data['url']])) {
+			return $id;
+		}
+
+		return null;
 	}
 
 }

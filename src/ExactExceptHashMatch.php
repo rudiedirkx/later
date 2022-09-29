@@ -4,7 +4,7 @@ namespace rdx\later;
 
 class ExactExceptHashMatch implements BookmarkMatcher {
 
-	public function findBookmarkId( array $data ) {
+	public function findBookmarkId( array $data ) : ?int {
 		global $db, $user;
 
 		$url = $this->prepUrl($data['url']);
@@ -15,6 +15,8 @@ class ExactExceptHashMatch implements BookmarkMatcher {
 				return $id;
 			}
 		}
+
+		return null;
 	}
 
 	protected function prepUrl( $url ) {

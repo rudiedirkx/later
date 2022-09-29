@@ -4,7 +4,7 @@ namespace rdx\later;
 
 class YoutubeMatch implements BookmarkMatcher {
 
-	public function findBookmarkId( array $data ) {
+	public function findBookmarkId( array $data ) : ?int {
 		global $db, $user;
 
 		if ( $vid = $this->getVideoId($data['url']) ) {
@@ -24,6 +24,8 @@ class YoutubeMatch implements BookmarkMatcher {
 				}
 			}
 		}
+
+		return null;
 	}
 
 	protected function getPlaylistId( $url ) {

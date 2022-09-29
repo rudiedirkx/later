@@ -26,12 +26,12 @@ class PreprocessYoutube implements BookmarkPreprocessor {
 		}
 
 		$html or $html = get_html($url);
-		$dom = Node::create($html);
+		$dom = Node::create($html, 'utf-8');
 
 		$ytData = $this->getMetaData($dom);
 		if ( !$ytData ) return;
 
-		$title = $ytData['videoDetails']['title'] ?? '';
+		$title = trim($ytData['videoDetails']['title'] ?? '');
 		$seconds = $ytData['videoDetails']['lengthSeconds'] ?? 0;
 		if ( !$title || !$seconds ) return;
 

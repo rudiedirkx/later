@@ -256,3 +256,19 @@ h3 .sub {
 	clear: both;
 	height: 0;
 }
+
+@media (prefers-color-scheme: dark) {
+	body,
+	.inline-filter .search,
+	input,
+	select,
+	button,
+	.group-header a.group-name,
+	.pager a {
+		background-color: #000;
+		color: #ccc;
+	}
+	.bookmarks li {
+		background-color: #111;
+	}
+}

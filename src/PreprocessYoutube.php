@@ -33,15 +33,18 @@ class PreprocessYoutube implements BookmarkPreprocessor {
 		$seconds = $ytData['videoDetails']['lengthSeconds'] ?? 0;
 		if ( !$title || !$seconds ) return;
 
+		$start = $ytData['playerConfig']['playbackStartConfig']['startSeconds'] ?? 0;
+		$done = $start ? $this->makeTime($start) . ' / ' : '';
+
 		$time = $this->makeTime($seconds);
-		$data['title'] = "$title ($time)";
+		$data['title'] = "$title ($done$time)";
 	}
 
 	protected function makeTime(int $s) : string {
 		$h = floor($s / 3600);
 		$m = str_pad(floor(($s - $h * 3600) / 60), 2, '0', STR_PAD_LEFT);
 		$s = str_pad($s % 60, 2, '0', STR_PAD_LEFT);
-		return "$h:$m:$s";
+		return ($h ? "$h:" : '') . "$m:$s";
 	}
 
 	protected function getMetaData(Node $dom) : ?array {

@@ -210,6 +210,8 @@ h3 .sub {
 	padding: 0 4px;
 	word-break: normal;
 	-webkit-appearance: none;
+	border: solid 1px #000;
+	background-color: #fff;
 	text-align: left;
 	text-align-last: center;
 }

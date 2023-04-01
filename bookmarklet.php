@@ -2,7 +2,7 @@
 
 require 'inc.bootstrap.php';
 
-header('Content-type: application/javascript');
+$page = !empty($_GET['page']);
 
 $loggedIn = is_logged_in(false);
 
@@ -35,6 +35,14 @@ if ( $loggedIn ) {
 else {
 	$text = "You're not logged in.";
 }
+
+if ( $page ) {
+	echo "<p>$text</p>\n";
+	echo "<a href=/>Home</a>\n";
+	exit;
+}
+
+header('Content-type: application/javascript');
 
 ?>
 

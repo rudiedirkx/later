@@ -56,10 +56,10 @@ else if ( isset($_GET['group'], $_GET['hidden']) ) {
 	exit('OK');
 }
 
-$filter = trim(@$_GET['url_filter']);
+$filter = trim($_GET['url_filter'] ?? '');
 $filter = $filter ? $db->replaceholders('AND (u.url LIKE ? OR u.title LIKE ?)', ["%$filter%", "%$filter%"]) : '';
 
-$groupFilter = trim(@$_GET['group_filter']);
+$groupFilter = trim($_GET['group_filter'] ?? '');
 $groupFilter = $groupFilter ? $db->replaceholders('AND u.`group` = ?', [$groupFilter]) : '';
 
 $limit = LATER_LIMIT;

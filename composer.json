@@ -2,7 +2,7 @@
     "name": "rdx/later",
     "type": "project",
     "require": {
-        "rdx/db": "dev-master",
+        "rdx/db": "^1.25",
         "guzzlehttp/guzzle": "^7.0",
         "rdx/js-dom": "^1.4"
     },

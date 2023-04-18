@@ -4,7 +4,7 @@ require 'inc.bootstrap.php';
 
 is_logged_in(true);
 
-$filter = trim(@$_GET['url_filter']);
+$filter = trim($_GET['url_filter'] ?? '');
 $filter = $filter ? $db->replaceholders(' AND (url LIKE ? OR title LIKE ?)', array('%' . $filter . '%', '%' . $filter . '%')) : '';
 
 $limit = 100;
